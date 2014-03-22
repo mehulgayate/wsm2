@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<weather>
+	<report id="2001">	
+	<date>2013-01-10</date>	
+	<rain>12</rain>		
+	</report>
+</weather>

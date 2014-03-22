@@ -1,0 +1,56 @@
+Creating folder----
+
+File theDir = new File("new folder");
+
+  // if the directory does not exist, create it
+  if (!theDir.exists()) {
+    System.out.println("creating directory: " + directoryName);
+    boolean result = theDir.mkdir();  
+
+     if(result) {    
+       System.out.println("DIR created");  
+     }
+  }
+  
+  -------------------------------------------------------------
+  Creating File
+  
+  String path = "C:"+File.separator+"hello"+File.separator+"hi.txt";
+//(use relative path for Unix systems)
+File f = new File(path);
+//(works for both Windows and Linux)
+f.mkdirs(); 
+f.createNewFile();
+  
+-----------------------------------------
+
+Appending in file
+
+public class AppendToFileExample 
+{
+    public static void main( String[] args )
+    {	
+    	try{
+    		String data = " This content will append to the end of the file";
+ 
+    		File file =new File("javaio-appendfile.txt");
+ 
+    		//if file doesnt exists, then create it
+    		if(!file.exists()){
+    			file.createNewFile();
+    		}
+ 
+    		//true = append file
+    		FileWriter fileWritter = new FileWriter(file.getName(),true);
+    	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+    	        bufferWritter.write(data);
+    	        bufferWritter.close();
+ 
+	        System.out.println("Done");
+ 
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    --------------------------------  
