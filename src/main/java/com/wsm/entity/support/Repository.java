@@ -11,6 +11,7 @@ import com.wsm.entity.Cluster;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.GraphData.GraphType;
 import com.wsm.entity.Report;
+import com.wsm.entity.Setting;
 
 @Transactional
 public class Repository {
@@ -68,6 +69,13 @@ public class Repository {
 
 		return (Long) getSession().createQuery("select count(*) FROM "+GraphData.class.getName()+" where graphType=:graphType")
 				.setParameter("graphType", graphType)
+				.uniqueResult();
+	}
+	
+	public Setting findSettingByName(String name){
+
+		return (Setting) getSession().createQuery("FROM "+Setting.class.getName()+" where name=:name")
+				.setParameter("name", name)
 				.uniqueResult();
 	}
 }

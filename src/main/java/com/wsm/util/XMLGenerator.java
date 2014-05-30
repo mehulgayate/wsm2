@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 public class XMLGenerator {
 
@@ -18,11 +19,11 @@ public class XMLGenerator {
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			bufferWritter.append("<weather>");
 			bufferWritter.newLine();
-			for(int i=33;i<200;i++){
+			for(int i=0;i<200;i++){
 				bufferWritter.append("<report id=\"" +(i++) +"\">"+
 						"<date>2014-01-09</date>"+
-						"<temperature>30</temperature>"+
-						"<humidity>80</humidity>"+
+						"<temperature>"+(-20 + (int)(Math.random() * ((50 - (-20)) + 1)))+"</temperature>"+
+						"<humidity>"+(1 + (int)(Math.random() * ((100 - 1) + 1)))+"</humidity>"+
 						"<wdirection>WEST2EAST</wdirection>"+
 						"<wspeed>30</wspeed>"+
 						"<rain>10</rain>"+

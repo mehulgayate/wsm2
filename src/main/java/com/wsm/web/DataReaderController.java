@@ -21,6 +21,7 @@ import com.evalua.entity.support.DataStoreManager;
 import com.wsm.entity.support.Repository;
 import com.wsm.form.FileUploadForm;
 import com.wsm.processor.ClusterCreator;
+import com.wsm.processor.KMedoidElementCreator;
 import com.wsm.processor.PMFCalculator;
 import com.wsm.processor.WSMConfiguration;
 import com.wsm.util.XMLParser;
@@ -48,6 +49,9 @@ public class DataReaderController {
 	
 	@Resource
 	private WSMConfiguration configuration;
+	
+	@Resource
+	private KMedoidElementCreator kMedoidElementCreator;	
 
 	@RequestMapping("/readData")
 	public ModelAndView readData()throws Exception{
@@ -86,6 +90,10 @@ public class DataReaderController {
 			clusterCreator.crateClusters();
 			clusterCreator.allocateCluster();
 			repository.removeAllRecords();
+			
+			doc = dBuilder.parse(new File(configuration.getOriginalBaseLocation()+"/allData.xml"));
+			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));
+			kMedoidElementCreator.JsontoReport(jsonObject);
 			mv.addObject("json",jsonObject);
 			mv.addObject("cluterLocation", configuration.getClusterBaseLocation());
 		} catch (Exception e) {

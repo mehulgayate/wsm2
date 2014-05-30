@@ -16,8 +16,6 @@ public class GraphData extends EntityBase{
 	public enum GraphType{
 		TROPICAL,DRY,TEMPERATE,CONTINENTAL,POLAR;
 	}
-	
-	private Long id;
 
 	private Double humidity;
 	private Double temperature;
@@ -49,14 +47,5 @@ public class GraphData extends EntityBase{
 	}
 	public void setTemperature(Double temperature) {
 		this.temperature = temperature;
-	}
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
+	}		
 }

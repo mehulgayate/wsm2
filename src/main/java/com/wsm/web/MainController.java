@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.evalua.entity.support.DataStoreManager;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.GraphData.GraphType;
+import com.wsm.entity.Setting;
 import com.wsm.entity.support.Repository;
 
 @Controller
@@ -70,4 +71,27 @@ public class MainController {
 		mv.addObject(jsonObjectOuter);
 		return mv;
 	}	
+	@RequestMapping("/settings")
+	public ModelAndView showSettings(){
+		ModelAndView mv=new ModelAndView("new/setting");
+		Setting setting=repository.findSettingByName("kMedoidClusterCount");
+		System.out.println("**** "+setting.getValue());
+		if(setting!=null){
+			mv.addObject("kMedoidClusterCount", setting.getValue());
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/add-setting")
+	public ModelAndView addSettings(@RequestParam String kMedoidClusterCount){
+		ModelAndView mv=new ModelAndView("redirect:/settings");
+		Setting setting=repository.findSettingByName("kMedoidClusterCount");
+		if(setting==null){
+			setting=new Setting();
+			setting.setName("kMedoidClusterCount");			
+		}
+		setting.setValue(kMedoidClusterCount);
+		dataStoreManager.save(setting);
+		return mv;
+	}
 }

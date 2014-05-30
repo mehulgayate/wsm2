@@ -1,17 +1,14 @@
 package com.wsm.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import com.evalua.entity.support.EntityBase;
 
 @Entity
-public class Cluster extends EntityBase {
+public class Setting extends EntityBase{
 	
-	
-	
-	private String name;	
+	private String name;
+	private String value;
 	
 	public String getName() {
 		return name;
@@ -19,7 +16,10 @@ public class Cluster extends EntityBase {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}	
 }

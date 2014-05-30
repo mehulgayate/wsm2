@@ -3,6 +3,8 @@
  */
 package com.wsm.entity.support;
 
+import java.util.Date;
+
 /** * 
  * This is an Element that is to be clustered. It defines all the functions that 
  * Elements that theses algorithms can cluster must support
@@ -18,7 +20,10 @@ public abstract class Element {
          * should identify the vector position in a distance matrix 
          */
         protected int id;
+        protected float temp;
+        protected float humidity;
         protected int calculatedClusternumber;
+        protected Date date;
 
 
         /**
@@ -27,8 +32,22 @@ public abstract class Element {
         public Element(int id) {
                 this.id =id;
         }
+        
+        
 
-        /**
+        public Date getDate() {
+			return date;
+		}
+
+
+
+		public void setDate(Date date) {
+			this.date = date;
+		}
+
+
+
+		/**
          * The label that this vector has.
          * @return
          */
@@ -87,8 +106,26 @@ public abstract class Element {
                         return false;
                 Element other = (Element) obj;
                 if (id != other.id)
-                        return false;
+                        return false;      
+                else if(date.toString().equals(other.date.toString()))
+                	return true;
                 return true;
         }
+
+		public float getTemp() {
+			return temp;
+		}
+
+		public void setTemp(float temp) {
+			this.temp = temp;
+		}
+
+		public float getHumidity() {
+			return humidity;
+		}
+
+		public void setHumidity(float humidity) {
+			this.humidity = humidity;
+		}      
 
 }

@@ -92,46 +92,23 @@ border-bottom: 1px solid;
                         <li><a href="/upload-new">Upload New Xml</a></li>                                                                                             
                   </ul>
                 </li>
-                <li><a href="/mining" class="selected">Mining</a></li>
-                <li><a href="/settings">Settings</a></li>                
+                <li><a href="/mining" class="selected">Mining</a></li> 
+                <li><a href="/settings" class="selected">Settings</a></li>                
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
         
      <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	<div class="resultTable">
-				<table style="border: 1px solid;">
-				<tr>
-				<th>
-					Region	
-				</th>
-				<th>
-					Number Of Records				
-				</th>				
-				</tr>
-				<tr>
-				<td>TROPICAL</td>
-				<td>${TROPICAL} </td>
-				</tr>
-				<tr>
-				<td>DRY</td>
-				<td>${DRY}</td>
-				</tr>
-				<tr>
-				<td>TEMPERATE</td>
-				<td>${TEMPERATE}</td>
-				</tr>
-				<tr>
-				<td>CONTINENTAL</td>
-				<td>${CONTINENTAL}</td>
-				</tr>	
-				<tr>
-				<td>POLAR</td>
-				<td>${POLAR}</td>
-				</tr>	
-				</table>
-			</div>  
+    	<form action="/add-setting">
+        	<div>
+        		<div style="display: inline-block;">K-Medoids number of clusters</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="kMedoidClusterCount"/ value="${kMedoidClusterCount}"/></div>
+        	</div> 
+        	<div>        		
+        		<div style="display: inline-block;"><input type="submit" value="Save"></div>
+        	</div>
+        </form>         
         </div>
         
     	<div class="content_wrapper">
@@ -139,5 +116,5 @@ border-bottom: 1px solid;
         </div>
         <div class="clear"></div>
     </div>
-</body>
+</body>  
 </html>

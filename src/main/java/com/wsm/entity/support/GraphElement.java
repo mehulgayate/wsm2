@@ -75,7 +75,25 @@ public class GraphElement extends Element{
         @Override
         public float calculateDistance(Element other) {
                 if (other instanceof GraphElement){
-                        return Dataset.getDistanceMatrix()[this.getId()][other.getId()];
+                	float tempDitance=0.00f;
+                	float humidityDitance=0.00f;
+                	float finalDistance=0.00f;
+                		if(this.getTemp() >other.getTemp()){
+                			tempDitance=this.getTemp()-other.getTemp();
+                		}else{
+                			tempDitance=other.getTemp()-this.getTemp();
+                		}
+                		
+                		/*if(this.getHumidity() >other.getHumidity()){
+                			humidityDitance=this.getHumidity()-other.getHumidity();
+                		}else{
+                			humidityDitance=other.getHumidity()-this.getHumidity();
+                		}*/
+                		
+                		
+                		finalDistance=humidityDitance+tempDitance;               			
+                		
+                        return finalDistance;
                         
                 } else{
                         throw new RuntimeException("could not calculate distance between FeatureVector and other element");

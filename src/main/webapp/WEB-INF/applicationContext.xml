@@ -179,5 +179,16 @@
 		<property name="repository" ref="repository" />
 		<property name="dateTimeUtil" ref="dateTimeUtil" />
 		<property name="dataStoreManager" ref="dataStoreManager" />
-	</bean>		
+	</bean>	
+	<bean id="kMedoidProcessor" class="com.wsm.processor.KMedoidProcessor">	
+		
+	</bean>	
+	<bean id="kMedoidElementCreator" class="com.wsm.processor.KMedoidElementCreator">		
+		<property name="dataStoreManager" ref="dataStoreManager" />
+		<property name="dateTimeUtil" ref="dateTimeUtil" />
+		<property name="repository" ref="repository" />
+		<property name="kMedoidProcessor" ref="kMedoidProcessor" />
+		
+	</bean>
+	
 </beans>

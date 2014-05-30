@@ -91,7 +91,14 @@ public class KMedoidProcessor {
                         center.setCalculatedClusternumber(i);
                         centers[i] = candidatPoints.get(randElement);
                         candidatPoints.remove(randElement);
+                        System.out.println(randElement+" ****");
+                        System.out.println(i+" ****");
                 }
+                
+                
+                for (GraphElement graphElement : dataset) {
+					System.out.println(graphElement.getId()+" %%% "+graphElement.getCalculatedClusternumber());
+				}
                 return centers;
         }
 
@@ -99,14 +106,13 @@ public class KMedoidProcessor {
 
         private void assingPointsToClosestCenter(Dataset dataset,
                         GraphElement[] centers) {
+        	
                 assert (centers[centers.length-1] != null);
                 for (GraphElement currFeatureVector : dataset) {
                         Float[] distances = new Float[centers.length];
                         for (int i = 0; i < distances.length; i++) {
                                 GraphElement currCenter = centers[i];
                                 distances[i] = currCenter.calculateDistance(currFeatureVector);
-                                
-
                         }
                         int closestId = CalculationUtil.getIndexOfMinElement(distances);
                         currFeatureVector.setCalculatedClusternumber(closestId);
@@ -123,15 +129,15 @@ public class KMedoidProcessor {
         private  GraphElement[] calculateCenters(Dataset dataset){
                 GraphElement[] recalcCenters = new GraphElement[this.numOfClusters];
                 Map<Integer, Cluster> clusters = dataset.getClustermap();
+                System.out.println("^^^^^^^^^^^^^^^^^^^ ");
                 for (Integer clusterID : clusters.keySet()) {
-
+                	System.out.println("^^^^^^^^^ "+clusterID);
                         GraphElement newMedoid = (clusters
                                         .get(clusterID).getMedoid());
                         assert (newMedoid.getCalculatedClusternumber() == clusterID);
                         recalcCenters[clusterID] = newMedoid;
                 }
-                return recalcCenters;
-                
+                return recalcCenters;                
         }
         
         /**
@@ -142,7 +148,7 @@ public class KMedoidProcessor {
          * @param initialMedoid
          */
         public void runKMedoids (Dataset dataset, GraphElement[] initialMedoid){
-        dataset.reset();
+       // dataset.reset();
         GraphElement[] oldCenters = null;
         this.centers = initialMedoid;
                 while (centersChanged(oldCenters, this.centers)) {

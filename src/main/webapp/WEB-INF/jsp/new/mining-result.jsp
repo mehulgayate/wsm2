@@ -90,7 +90,8 @@ border-bottom: 1px solid;
                         <li><a href="/upload-new">Upload New Xml</a></li>                                                                                             
                   </ul>
                 </li>
-                <li><a href="/mining" class="selected">Mining</a></li>                
+                <li><a href="/mining" class="selected">Mining</a></li>   
+                <li><a href="/settings">Settings</a></li>             
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->

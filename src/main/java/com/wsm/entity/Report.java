@@ -15,10 +15,7 @@ public class Report extends EntityBase{
 	public enum WindDirection{
 		EAST2WEST,WEST2EAST;
 	}
-
-	@Id
-	@GeneratedValue
-	private Long id;
+	
 	private String xmlString;
 	private String klStringValue;
 	private Double rain;	
@@ -91,13 +88,7 @@ public class Report extends EntityBase{
 	}
 	public void setReportId(Integer reportId) {
 		this.reportId = reportId;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	}	
 	public String getXmlString() {
 		return xmlString;
 	}
