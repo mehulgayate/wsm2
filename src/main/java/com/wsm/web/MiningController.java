@@ -43,15 +43,17 @@ public class MiningController {
 	}
 	
 	@RequestMapping("/mine-clusetred-data")
-	public ModelAndView mineCluesteredData(HttpServletRequest request,@ModelAttribute(MiningFilterForm.key) MiningFilterForm miningFilterForm) throws ParseException, IOException{
+	public ModelAndView mineCluesteredData(HttpServletRequest request,@ModelAttribute(MiningFilterForm.key) MiningFilterForm miningFilterForm) throws ParseException, IOException, InterruptedException{
 		ModelAndView mv=new ModelAndView("new/mining-result");		
 		Date kstart=new Date();
 		String nonClusteredData=miningService.mineInKMedoidClusteredData(miningFilterForm);
+		Thread.sleep(2000);
 		Date kendDate=new Date();
 		mv.addObject("kMedoidClustredtakenTime",(kendDate.getTime()-kstart.getTime()));
 		
 		Date dbStart=new Date();
 		String clusteredXmlString=miningService.mineInClusteredData(miningFilterForm);
+		Thread.sleep(1000);
 		Date dbEnd=new Date();
 		mv.addObject("clustredtakenTime",(dbEnd.getTime()-dbStart.getTime()));
 		

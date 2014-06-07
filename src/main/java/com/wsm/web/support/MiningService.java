@@ -322,6 +322,9 @@ public class MiningService {
 			startDate=dateTimeUtil.provideDate(miningFilterForm.getStartDate());
 			startDate=dateTimeUtil.getMonthsFirstDate(startDate);
 
+			System.out.println(typeToSearch.equals("min")  +" "+ cluster.getTempMax()+" "+ configuration.getTempMinThreshold());
+			
+			
 			if(typeToSearch.equals("max") && cluster.getTempMax()>=configuration.getTempMaxThreshold()){
 				while(startDate.before(endDate)){
 					File file=new File(configuration.getkMedoidClusterBaseLocation()+"/"+cluster.getName()+"/"+dateTimeUtil.provideDateString(startDate)+".xml");
@@ -332,7 +335,8 @@ public class MiningService {
 					startDate=dateTimeUtil.getNextMonthsDate(startDate);
 				}
 
-			}else if(typeToSearch.equals("min") && cluster.getTempMax()<=configuration.getTempMinThreshold()){
+			}else if( typeToSearch.equals("min") && cluster.getTempMax()<=configuration.getTempMinThreshold() ){
+				System.out.println("inisde if &&&&&&&&&&&&^^^^^^^^^^^^^^");
 				while(startDate.before(endDate)){
 					File file=new File(configuration.getkMedoidClusterBaseLocation()+"/"+cluster.getName()+"/"+dateTimeUtil.provideDateString(startDate)+".xml");
 					System.out.println("File in clusters "+file.getAbsolutePath());

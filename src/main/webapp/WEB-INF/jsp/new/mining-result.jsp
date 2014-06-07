@@ -159,8 +159,8 @@ border-bottom: 1px solid;
     </div>
 </div>
 <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
       function drawChart() {
     	  
     	  var dataArray=[];
@@ -180,7 +180,7 @@ border-bottom: 1px solid;
 				
     				$.each(data,function(key,value){
     					var innerArray=[];    	
-    					innerArray.push(parseInt(value.date));    					
+    					innerArray.push(value.date);    					
     					innerArray.push(parseInt(value.dbTime));
     					innerArray.push(parseInt(value.kTime));
     					dataArray.push(innerArray);
@@ -196,8 +196,10 @@ border-bottom: 1px solid;
     		    		        'title': 'Date'
     		    		    },title: "DBSCAN with KL vs K-Medoid with KL"
     		    	};
+    		        
+    		        
 
-    		        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    		        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     		        chart.draw(data, options);
     			},
     			error : function(e) {
