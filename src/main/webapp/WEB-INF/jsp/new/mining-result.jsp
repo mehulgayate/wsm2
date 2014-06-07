@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="/static/style.css" />
 <script type="text/javascript" src="/static/js/jquery.min.js" ></script>
 <script type="text/javascript" src="/static/js/jquery-ui.min.js" ></script>
+<script type="text/javascript" src="/static/js/jsapi.js" ></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
@@ -122,12 +123,7 @@ border-bottom: 1px solid;
 		<td>-</td>
 		<td>${recordCount}</td>
 		</tr>
-		<tr>
-		<td>Avg Record Size</td>
-		<td>5</td>
-		<td>5</td>
-		</tr>
-		<tr>
+		<tr>		
 		<td>Clusters Accessed</td>
 		<td>${clusterCount}</td>
 		<td>--</td>
@@ -141,13 +137,13 @@ border-bottom: 1px solid;
 <textarea style="width: 800px; min-height: 500px;">${clusteredXmlResult}</textarea>
 
 <br /><br />
-<strong>Mining From Non-Clustered data  : </strong><br/>
-<strong>Time Taken : </strong>${nonClustredtakenTime}<br/>
-<textarea style="width: 800px; min-height: 500px;">${nonClusteredData}</textarea>
+<strong>Mining From K Medoid Clustered data  : </strong><br/>
+<strong>Time Taken : </strong>${kMedoidClustredtakenTime}<br/>
+<textarea style="width: 800px; min-height: 500px;">${kMedoidClusteredData}</textarea>
 </div>   	
         </div>
     	<div class="content_wrapper">
-            
+            <div id="chart_div" style="width: 900px; height: 700px;"></div>
         </div>
         <div class="clear"></div>
     </div>
@@ -162,6 +158,54 @@ border-bottom: 1px solid;
         Developed By <a href="#"></a> 
     </div>
 </div>
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+    	  
+    	  var dataArray=[];
+    		var headerArray=[];
+    		headerArray.push("Time");
+    		headerArray.push("DBScanRecall");
+    		headerArray.push("KMedoidScanRecall");
+    		dataArray.push(headerArray);	
+
+    	  
+    	  $.ajax({		
+    			type : "GET",
+    			url : "/recall-data",			
+    			data : "type=TROPICAL",
+    			dataType:"json",
+    			success : function(data) {    				 
+				
+    				$.each(data,function(key,value){
+    					var innerArray=[];    	
+    					innerArray.push(parseInt(value.date));    					
+    					innerArray.push(parseInt(value.dbTime));
+    					innerArray.push(parseInt(value.kTime));
+    					dataArray.push(innerArray);
+    				});
+    				
+    			//	alert(JSON.stringify(dataArray));
+    				var data = google.visualization.arrayToDataTable(dataArray);
+
+    		        var options = {
+    		    			'width':800,'height':600,'vAxis': {'title': 'TimeTaken(ms)'},hAxis: {
+    		    		        slantedText:true,
+    		    		        slantedTextAngle:90,// here you can even use 180
+    		    		        'title': 'Date'
+    		    		    },title: "DBSCAN with KL vs K-Medoid with KL"
+    		    	};
+
+    		        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    		        chart.draw(data, options);
+    			},
+    			error : function(e) {
+    				alert('Error while Ajax');
+    			}		
+    		});
+      }      
+</script>
 </body>
-<script type='text/javascript' src='js/logging.js'></script>
+
 </html>

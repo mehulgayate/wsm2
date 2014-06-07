@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 
 import com.wsm.entity.Cluster;
+import com.wsm.entity.Cluster.ClusterType;
 import com.wsm.entity.Report;
 import com.wsm.entity.Report.WindDirection;
 import com.wsm.entity.support.Repository;
@@ -29,7 +30,7 @@ import com.wsm.util.DateTimeUtil;
 import com.wsm.util.XMLParser;
 
 public class MiningService {
-	
+
 	public static int recordCount=0;
 	public static int clusterCount=0;
 
@@ -54,8 +55,8 @@ public class MiningService {
 	public String mineInClusteredData(MiningFilterForm miningFilterForm) throws ParseException, IOException{
 		StringBuilder stringBuilder=new StringBuilder("<weather>");
 		List<String> clustersToSearch=new ArrayList<String>();
-int clustercnt=0;
-		
+		int clustercnt=0;
+
 		if(miningFilterForm.getHumidity()!=null){
 			if(miningFilterForm.getHumidity().equals("max")){
 				clustersToSearch.add(configuration.getMaxHumidityPmfStrings());
@@ -297,6 +298,56 @@ int clustercnt=0;
 		return stringBuilder.toString();
 
 	}
+
+	public String mineInKMedoidClusteredData(MiningFilterForm miningFilterForm) throws ParseException, IOException{
+		StringBuilder stringBuilder=new StringBuilder("<weather>");
+		String typeToSearch="";
+
+
+		if(miningFilterForm.getTemp()!=null){
+			if(miningFilterForm.getTemp().equals("max")){
+				typeToSearch="max";
+			}else if(miningFilterForm.getTemp().equals("min")){
+				typeToSearch="min";
+			}
+		}
+
+		Date startDate=dateTimeUtil.provideDate(miningFilterForm.getStartDate());
+		startDate=dateTimeUtil.getMonthsFirstDate(startDate);
+		Date endDate=dateTimeUtil.provideDate(miningFilterForm.getEndDate());
+
+		List<Cluster> allClusters=repository.listAllClustersByType(ClusterType.K_MEDOID);
+
+		for (Cluster cluster : allClusters) {
+			startDate=dateTimeUtil.provideDate(miningFilterForm.getStartDate());
+			startDate=dateTimeUtil.getMonthsFirstDate(startDate);
+
+			if(typeToSearch.equals("max") && cluster.getTempMax()>=configuration.getTempMaxThreshold()){
+				while(startDate.before(endDate)){
+					File file=new File(configuration.getkMedoidClusterBaseLocation()+"/"+cluster.getName()+"/"+dateTimeUtil.provideDateString(startDate)+".xml");
+					System.out.println("File in clusters "+file.getAbsolutePath());
+					if(file.exists()){
+						stringBuilder.append(getFileContent(file));							
+					}
+					startDate=dateTimeUtil.getNextMonthsDate(startDate);
+				}
+
+			}else if(typeToSearch.equals("min") && cluster.getTempMax()<=configuration.getTempMinThreshold()){
+				while(startDate.before(endDate)){
+					File file=new File(configuration.getkMedoidClusterBaseLocation()+"/"+cluster.getName()+"/"+dateTimeUtil.provideDateString(startDate)+".xml");
+					System.out.println("File in clusters "+file.getAbsolutePath());
+					if(file.exists()){
+						stringBuilder.append(getFileContent(file));							
+					}
+					startDate=dateTimeUtil.getNextMonthsDate(startDate);
+				}
+			}
+
+		}
+		stringBuilder.append("</weather>");		
+		return stringBuilder.toString();
+	}
+
 
 
 }

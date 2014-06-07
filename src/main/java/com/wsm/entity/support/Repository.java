@@ -11,6 +11,7 @@ import com.wsm.entity.Cluster;
 import com.wsm.entity.Cluster.ClusterType;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.GraphData.GraphType;
+import com.wsm.entity.Recall;
 import com.wsm.entity.Report;
 import com.wsm.entity.Setting;
 
@@ -43,6 +44,12 @@ public class Repository {
 		return getSession().createQuery("FROM "+Cluster.class.getName())
 				.list();
 	}
+	
+	public List<Recall> listRecall(){
+		return getSession().createQuery("FROM "+Recall.class.getName())
+				.list();
+	}
+	
 	public List<String> listClustersByType(ClusterType type){
 		return getSession().createQuery("select cl.name FROM "+Cluster.class.getName() +" cl where cl.type=:type")
 				.setParameter("type", type)
