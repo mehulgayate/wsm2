@@ -23,10 +23,23 @@ public abstract class Element {
         protected float temp;
         protected float humidity;
         protected int calculatedClusternumber;
+        protected String xml;
         protected Date date;
 
+        
+        public String getXml() {
+			return xml;
+		}
 
-        /**
+
+
+		public void setXml(String xml) {
+			this.xml = xml;
+		}
+
+
+
+		/**
          * 
          */
         public Element(int id) {

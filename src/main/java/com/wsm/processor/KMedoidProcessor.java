@@ -51,7 +51,36 @@ public class KMedoidProcessor {
          */        
         public void doClustering(Dataset dataset) {
                 dataset.reset();
+                
+                boolean foundUnique=false;
                 GraphElement[] randomCentroids = this.chooseRandomElementsAsCenters(dataset);
+                
+                int iteration=0;
+                while (!foundUnique) {
+                	randomCentroids = this.chooseRandomElementsAsCenters(dataset);
+                	
+                	for (GraphElement graphElement : randomCentroids) {
+                		for (GraphElement graphElement2 : randomCentroids) {                			
+        					if(graphElement.getId()!=graphElement2.getId() && graphElement.getTemp()!=graphElement2.getTemp()){
+        						foundUnique=true;        						
+        					}else if(graphElement.getId()!=graphElement2.getId() && graphElement.getTemp()==graphElement2.getTemp()){
+        						foundUnique=false;
+        						break;
+        					}
+        				}
+                		if(foundUnique==false){
+                			break;
+                		}
+    				}                	
+					iteration++;
+					if(iteration>20){
+						throw new RuntimeException("Unable to find unique centers >>>>");
+					}
+				}
+                for (GraphElement graphElement : randomCentroids) {
+					System.out.println("Center selected : id : "+graphElement.getId() +" Temp : "+graphElement.getTemp());
+				}
+                
                 this.runKMedoids(dataset,randomCentroids );
         
 
@@ -90,15 +119,11 @@ public class KMedoidProcessor {
                         Element center = candidatPoints.get(randElement);
                         center.setCalculatedClusternumber(i);
                         centers[i] = candidatPoints.get(randElement);
-                        candidatPoints.remove(randElement);
-                        System.out.println(randElement+" ****");
-                        System.out.println(i+" ****");
+                        candidatPoints.remove(randElement);                        
                 }
                 
                 
-                for (GraphElement graphElement : dataset) {
-					System.out.println(graphElement.getId()+" %%% "+graphElement.getCalculatedClusternumber());
-				}
+                
                 return centers;
         }
 
@@ -110,11 +135,12 @@ public class KMedoidProcessor {
                 assert (centers[centers.length-1] != null);
                 for (GraphElement currFeatureVector : dataset) {
                         Float[] distances = new Float[centers.length];
+                        
                         for (int i = 0; i < distances.length; i++) {
                                 GraphElement currCenter = centers[i];
-                                distances[i] = currCenter.calculateDistance(currFeatureVector);
+                                distances[i] = currCenter.calculateDistance(currFeatureVector);                               
                         }
-                        int closestId = CalculationUtil.getIndexOfMinElement(distances);
+                        int closestId = CalculationUtil.getIndexOfMinElement(distances);                        
                         currFeatureVector.setCalculatedClusternumber(closestId);
                         assert (centers[closestId].getCalculatedClusternumber() == closestId);
                 }
@@ -129,9 +155,8 @@ public class KMedoidProcessor {
         private  GraphElement[] calculateCenters(Dataset dataset){
                 GraphElement[] recalcCenters = new GraphElement[this.numOfClusters];
                 Map<Integer, Cluster> clusters = dataset.getClustermap();
-                System.out.println("^^^^^^^^^^^^^^^^^^^ ");
-                for (Integer clusterID : clusters.keySet()) {
-                	System.out.println("^^^^^^^^^ "+clusterID);
+                
+                for (Integer clusterID : clusters.keySet()) {                
                         GraphElement newMedoid = (clusters
                                         .get(clusterID).getMedoid());
                         assert (newMedoid.getCalculatedClusternumber() == clusterID);

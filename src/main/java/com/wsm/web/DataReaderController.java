@@ -95,7 +95,9 @@ public class DataReaderController {
 			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));
 			kMedoidElementCreator.JsontoReport(jsonObject);
 			mv.addObject("json",jsonObject);
-			mv.addObject("cluterLocation", configuration.getClusterBaseLocation());
+			mv.addObject("cluterLocations", repository.listAllClusters());
+			mv.addObject("dbBase", configuration.getClusterBaseLocation());
+			mv.addObject("kmedBase", configuration.getkMedoidClusterBaseLocation());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

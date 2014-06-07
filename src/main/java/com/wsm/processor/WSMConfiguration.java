@@ -30,8 +30,14 @@ public class WSMConfiguration {
 
 	private String clusterBaseLocation;
 	private String originalBaseLocation;
-
-
+	private String kMedoidClusterBaseLocation;
+	
+	public String getkMedoidClusterBaseLocation() {
+		return kMedoidClusterBaseLocation;
+	}
+	public void setkMedoidClusterBaseLocation(String kMedoidClusterBaseLocation) {
+		this.kMedoidClusterBaseLocation = kMedoidClusterBaseLocation;
+	}
 	public String getOriginalBaseLocation() {
 		return originalBaseLocation;
 	}

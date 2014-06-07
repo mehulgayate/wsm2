@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wsm.entity.Cluster;
+import com.wsm.entity.Cluster.ClusterType;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.GraphData.GraphType;
 import com.wsm.entity.Report;
@@ -40,6 +41,16 @@ public class Repository {
 
 	public List<Cluster> listAllClusters(){
 		return getSession().createQuery("FROM "+Cluster.class.getName())
+				.list();
+	}
+	public List<String> listClustersByType(ClusterType type){
+		return getSession().createQuery("select cl.name FROM "+Cluster.class.getName() +" cl where cl.type=:type")
+				.setParameter("type", type)
+				.list();
+	}
+	public List<Cluster> listAllClustersByType(ClusterType type){
+		return getSession().createQuery("FROM "+Cluster.class.getName() +" cl where cl.type=:type")
+				.setParameter("type", type)
 				.list();
 	}
 

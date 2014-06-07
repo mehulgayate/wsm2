@@ -75,7 +75,7 @@ public class MainController {
 	public ModelAndView showSettings(){
 		ModelAndView mv=new ModelAndView("new/setting");
 		Setting setting=repository.findSettingByName("kMedoidClusterCount");
-		System.out.println("**** "+setting.getValue());
+		
 		if(setting!=null){
 			mv.addObject("kMedoidClusterCount", setting.getValue());
 		}

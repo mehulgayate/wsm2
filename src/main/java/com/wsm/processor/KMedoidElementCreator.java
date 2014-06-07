@@ -1,5 +1,6 @@
 package com.wsm.processor;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,8 +11,9 @@ import javax.annotation.Resource;
 import net.sf.json.JSONObject;
 
 import com.evalua.entity.support.DataStoreManager;
-import com.sun.tools.jdi.EventSetImpl.Itr;
+import com.wsm.entity.Cluster;
 import com.wsm.entity.Report;
+import com.wsm.entity.Cluster.ClusterType;
 import com.wsm.entity.Report.WindDirection;
 import com.wsm.entity.Setting;
 import com.wsm.entity.support.Dataset;
@@ -32,7 +34,13 @@ public class KMedoidElementCreator {
 	
 	@Resource
 	private KMedoidProcessor kMedoidProcessor;
+	
+	private ClusterCreator clusterCreator;
+	
 
+	public void setClusterCreator(ClusterCreator clusterCreator) {
+		this.clusterCreator = clusterCreator;
+	}
 	public void setkMedoidProcessor(KMedoidProcessor kMedoidProcessor) {
 		this.kMedoidProcessor = kMedoidProcessor;
 	}
@@ -47,7 +55,7 @@ public class KMedoidElementCreator {
 		this.dataStoreManager = dataStoreManager;
 	}	
 	
-	public void JsontoReport(JSONObject jsonObject) throws ParseException{
+	public void JsontoReport(JSONObject jsonObject) throws ParseException, IOException{
 
 		JSONObject reports=jsonObject.getJSONObject("weather");
 		Iterator<String> iterator=reports.keys();
@@ -57,38 +65,41 @@ public class KMedoidElementCreator {
 			String reportKey=iterator.next();
 			JSONObject reportObject=reports.getJSONObject(reportKey);
 			Iterator<String> innIterator=reportObject.keys();
-			Report report=new Report();
 			
-			report.setReportId(new Integer(reportKey));
+			
+			
+			
 
 			String fileLine[]=new String[2];
 			fileLine[0]=reportKey;
 			
 			GraphElement graphElement=new GraphElement(new Integer(reportKey), fileLine);
+			graphElement.setId(Integer.parseInt(reportKey));
 			
 			do{
 				String key=innIterator.next();				
 				if(key.equals("rain")){					
-					report.setRain(reportObject.getDouble(key));
+			
 				}else if(key.equals("snow")){
-					report.setSnow(reportObject.getDouble(key));
+			
 				}else if(key.equals("temperature")){
-					report.setTemprature(reportObject.getDouble(key));
+			
 					graphElement.setTemp(Float.parseFloat(reportObject.getString(key)));
-					graphElement.setId(Integer.parseInt(reportObject.getString(key)));
+					
 				}else if(key.equals("humidity")){
-					report.setHumidity(reportObject.getDouble(key));
+			
 					graphElement.setHumidity(Float.parseFloat(reportObject.getString(key)));
 				}else if(key.equals("wdirection")){
-					report.setWindDirection(WindDirection.valueOf(reportObject.getString(key)));
+			
 				}else if (key.equals("wspeed")) {
-					report.setWspeed(reportObject.getDouble(key));
+			
 				}else if(key.equals("date")){
-					report.setDate(dateTimeUtil.provideDate(reportObject.getString(key)));
+			
 					graphElement.setDate(dateTimeUtil.provideDate(reportObject.getString(key)));
 				}
 				else if(key.equals("xml")){
-					report.setXmlString(reportObject.getString(key));
+			
+					graphElement.setXml(reportObject.getString(key));
 				}		
 
 			}while(innIterator.hasNext());
@@ -110,11 +121,26 @@ public class KMedoidElementCreator {
 		kMedoidProcessor.doClustering(dataset);
 		
 		System.out.println(" $$$$$$   Centers $$$$");
-		int centerCount=1;
+		int centerCount=0;
+		List<Cluster> clusterStrings=repository.listAllClustersByType(ClusterType.K_MEDOID);
+		
+		for (Cluster cluster : clusterStrings) {
+			dataStoreManager.delete(cluster);
+		}
+		
 		for (GraphElement graphElement : kMedoidProcessor.centers) {
 			System.out.println(" $$$$$$   Centers "+centerCount+" :---- TempRature : "+graphElement.getTemp()+" ------ Humidity : "+graphElement.getHumidity());
+			
+			Cluster cluster=new Cluster();
+			cluster.setName(centerCount+"");
+			cluster.setTempMax(new Float(graphElement.getTemp()).intValue());
+			cluster.setType(ClusterType.K_MEDOID);
+			dataStoreManager.save(cluster);
 			centerCount++;
 		}
+		
+		clusterCreator.crateKMedoidClusters();
+		clusterCreator.allocateKMedoidCluster(dataset);
 		
 		for (GraphElement graphElement : dataset) {
 			System.out.println("ID : "+graphElement.getLabel()+" TEMP : "+graphElement.getTemp()+" Humidity: "+graphElement.getHumidity()+" ** Cluster allocated : "+ graphElement.getCalculatedClusternumber());

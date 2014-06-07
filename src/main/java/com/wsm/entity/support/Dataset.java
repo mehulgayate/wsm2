@@ -61,21 +61,18 @@ public class Dataset implements Iterable<GraphElement>{
 	 }
 
 	 private void createClusterMap(){
-		 HashMap<Integer, Cluster> clusters = new HashMap<Integer, Cluster>();
-		 System.out.println("############ ");
+		 HashMap<Integer, Cluster> clusters = new HashMap<Integer, Cluster>();		 
 		 for (GraphElement featureVector : this.vectors) {
 			 Integer currentClusternumber =featureVector.getCalculatedClusternumber();
-			 System.out.println("vector "+featureVector.getId());
-			 System.out.println("## "+currentClusternumber);
+			 
+			 
 				 Cluster temp  = clusters.get(currentClusternumber);
 				 assert (currentClusternumber != Element.UNCLASSIFIED);
 				 if (temp != null){
-					 temp.add(featureVector);
-					 System.out.println("### NOT NULL "+currentClusternumber);
+					 temp.add(featureVector);					 
 				 } else {
 					 temp =  new Cluster(currentClusternumber);
-					 temp.add(featureVector);
-					 System.out.println("### YES ITS NULL "+currentClusternumber);
+					 temp.add(featureVector);					 
 					 clusters.put(currentClusternumber,temp);
 				 }			 
 		 }

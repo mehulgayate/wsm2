@@ -14,7 +14,10 @@ import javax.annotation.Resource;
 
 import com.evalua.entity.support.DataStoreManager;
 import com.wsm.entity.Cluster;
+import com.wsm.entity.Cluster.ClusterType;
 import com.wsm.entity.Report;
+import com.wsm.entity.support.Dataset;
+import com.wsm.entity.support.GraphElement;
 import com.wsm.entity.support.Repository;
 import com.wsm.util.DateTimeUtil;
 
@@ -62,6 +65,7 @@ public class ClusterCreator {
 			if(cluster==null){
 				cluster =new Cluster();
 				cluster.setName(report.getKlStringValue());
+				cluster.setType(ClusterType.DBSCAN);
 				dataStoreManager.save(cluster);				
 			}
 			String fileName=dateTimeUtil.provideDateString(report.getDate());
@@ -162,6 +166,80 @@ public class ClusterCreator {
 		this.dateTimeUtil = dateTimeUtil;
 	}
 	
+	public void crateKMedoidClusters(){
+		List<String> clusterStrings=repository.listClustersByType(ClusterType.K_MEDOID);
+
+		File baseFolder= new File(configuration.getkMedoidClusterBaseLocation()+"/conf.wsm");
+		
+		baseFolder.mkdirs();
+		try {
+			baseFolder.createNewFile();
+			for (String string : clusterStrings) {
+				new File(configuration.getkMedoidClusterBaseLocation()+"/"+string).mkdir();
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void allocateKMedoidCluster(Dataset dataset) throws ParseException, IOException{
+		
+
+		for (GraphElement graphElement : dataset) {
+			
+			String fileName=dateTimeUtil.provideDateString(graphElement.getDate());
+			File file=new File(configuration.getkMedoidClusterBaseLocation()+"/"+graphElement.getCalculatedClusternumber()+"/"+fileName+".xml");
+System.out.println("&&&& file location :"+configuration.getkMedoidClusterBaseLocation()+"/"+graphElement.getCalculatedClusternumber()+"/"+fileName+".xml");
+
+			if(!file.exists()){
+
+				file.createNewFile();
+				FileWriter fileWritter = new FileWriter(file,true);
+				BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+				bufferWritter.append("<weather>");		
+				bufferWritter.append(System.getProperty("line.separator"));
+				bufferWritter.close();
+			}
+			
+			File tempFile = new File(configuration.getkMedoidClusterBaseLocation()+"/"+graphElement.getCalculatedClusternumber()+"/temp.xml");
+
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+			String lineToRemove = "</weather>";
+			String currentLine;
+
+			while((currentLine = reader.readLine()) != null) {
+			    // trim append() when comparing with lineToRemove
+			    String trimmedLine = currentLine.trim();
+			    if(trimmedLine.equals(lineToRemove)) continue;
+			    writer.write(currentLine);
+			}
+
+			reader.close();
+			writer.close();		
+			file.delete();
+			tempFile.renameTo(file);		
+						
+			
+				
+			
+			
+			FileWriter fileWritter = new FileWriter(file,true);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			bufferWritter.append(System.getProperty("line.separator"));
+			bufferWritter.append(graphElement.getXml());
+			bufferWritter.append(System.getProperty("line.separator"));
+			bufferWritter.append("</weather>");
+			
+			bufferWritter.close();
+			fileWritter.close();		
+			
+		}
+		System.out.println("Data K-Medoid Clustring Completed !!!");
+	}
+
 
 
 

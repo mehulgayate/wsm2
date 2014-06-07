@@ -73,7 +73,7 @@
 	<bean id="dataStoreManager"
 		class="com.evalua.entity.support.DataStoreManager">
 		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	</bean>	
 	<bean id="repository"
 		class="com.wsm.entity.support.Repository">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -152,6 +152,9 @@
 	    </property>	
 	     <property name="originalBaseLocation">
 	        <value>${wsm.originalBaseLocation}</value>
+	    </property>
+	    <property name="kMedoidClusterBaseLocation">
+	        <value>${wsm.kMedoidClusterBaseLocation}</value>
 	    </property>	    
 	</bean>
 	
@@ -188,6 +191,7 @@
 		<property name="dateTimeUtil" ref="dateTimeUtil" />
 		<property name="repository" ref="repository" />
 		<property name="kMedoidProcessor" ref="kMedoidProcessor" />
+		<property name="clusterCreator" ref="clusterCreator" />
 		
 	</bean>
 	
