@@ -18,7 +18,7 @@ public class Dataset implements Iterable<GraphElement>{
 	private Map <Integer,Cluster> clusterMap;
 	private Map <Integer,Cluster> labelMap;
 	private SortedMap<Float, List<Integer>>[] neighbourMatrix;
-	private static float[][] distanceMatrix = null;
+	private static Map<String, Float> distanceMatrix = null;
 
 	public void add(GraphElement fv){
 		this.vectors.add(fv);
@@ -179,7 +179,7 @@ public class Dataset implements Iterable<GraphElement>{
 	 }
 	 //Distance Matrix and Funcionallity 
 
-	 public static float[][] getDistanceMatrix() {
+	 public static Map<String, Float> getDistanceMatrix() {
 		 if (distanceMatrix == null){
 			 throw new RuntimeException("Distance Matrix not available");
 		 }
@@ -187,7 +187,7 @@ public class Dataset implements Iterable<GraphElement>{
 	 }
 
 
-	 public static void setDistanceMatrix(float[][] distanceMatrix) {
+	 public static void setDistanceMatrix(Map<String, Float> distanceMatrix) {
 		 Dataset.distanceMatrix = distanceMatrix;
 	 }
 

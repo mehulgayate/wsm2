@@ -93,7 +93,7 @@ function clearText(field)
         	 
         	 <br/>
         	 <br/>
-        	 DBSCAN Clusters:
+        	 K-Medoid Clusters:
         	<br/>
         	 <#list cluterLocations as cluster>
         	 	<#if cluster.type="K_MEDOID">

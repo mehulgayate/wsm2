@@ -33,28 +33,13 @@ border-bottom: 1px solid;
 	
 	</th>
 	<th>
-	Mining From Non-Clustered Data
+	Mining From K-Medoid-Clustered Data
 	</th>
 	</tr>
 	<tr>
 	<td>Time Taken</td>
 	<td>${clustredtakenTime} ms</td>
-	<td>${nonClustredtakenTime} ms</td>
-	</tr>
-	<tr>
-	<td>Number of records fetched</td>
-	<td>-</td>
-	<td>${recordCount}</td>
-	</tr>
-	<tr>
-	<td>Avg Record Size</td>
-	<td>5</td>
-	<td>5</td>
-	</tr>
-	<tr>
-	<td>Clusters Accessed</td>
-	<td>${clusterCount}</td>
-	<td>--</td>
+	<td>${kMedoidClustredtakenTime} ms</td>
 	</tr>
 	
 	</table>

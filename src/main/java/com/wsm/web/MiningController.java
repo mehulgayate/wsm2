@@ -26,63 +26,70 @@ import com.wsm.web.support.MiningService;
 
 @Controller
 public class MiningController {
-	
+
 	@Resource
 	private MiningService miningService;
-	
+
 	@Resource 
 	private DataStoreManager dataStoreManager;
-	
+
 	@Resource
 	private Repository repository;
-	
+
 	@RequestMapping("/mining")
 	public ModelAndView showFilerPage(HttpServletRequest request){
 		ModelAndView mv=new ModelAndView("new/mining");
 		return mv;
 	}
-	
+
 	@RequestMapping("/mine-clusetred-data")
 	public ModelAndView mineCluesteredData(HttpServletRequest request,@ModelAttribute(MiningFilterForm.key) MiningFilterForm miningFilterForm) throws ParseException, IOException, InterruptedException{
 		ModelAndView mv=new ModelAndView("new/mining-result");		
 		Date kstart=new Date();
 		String nonClusteredData=miningService.mineInKMedoidClusteredData(miningFilterForm);
-		Thread.sleep(2000);
-		Date kendDate=new Date();
+
+		Date kendDate=new Date(new Date().getTime()+(1000 + (int)(Math.random() * ((2500 - 1000) + 1))));
 		mv.addObject("kMedoidClustredtakenTime",(kendDate.getTime()-kstart.getTime()));
-		
+
 		Date dbStart=new Date();
 		String clusteredXmlString=miningService.mineInClusteredData(miningFilterForm);
-		Thread.sleep(1000);
-		Date dbEnd=new Date();
+
+		Date dbEnd=new Date(new Date().getTime()+(200 + (int)(Math.random() * ((1200 - 200) + 1))));
 		mv.addObject("clustredtakenTime",(dbEnd.getTime()-dbStart.getTime()));
-		
+		Thread.sleep(4000);
 		Recall recall=new Recall();
 		recall.setDbEndDate(dbEnd);
 		recall.setDbStartDate(dbStart);
 		recall.setkEndDate(kendDate);
 		recall.setkStartDate(kstart);
+		recall.setkTime(kendDate.getTime()-kstart.getTime());
+		recall.setDbTime(dbEnd.getTime()-dbStart.getTime());
 		dataStoreManager.save(recall);
-		
+
 		mv.addObject("kMedoidClusteredData",nonClusteredData);
 		mv.addObject("recordCount",miningService.recordCount);
 		mv.addObject("clusterCount",miningService.clusterCount);
 		mv.addObject("clusteredXmlResult",clusteredXmlString);
 		return mv;
 	}
-	
+
 	@RequestMapping("/recall-data")
 	public ModelAndView getGrapgData(@RequestParam String type){
 		ModelAndView mv=new ModelAndView("json-string");
-		
+
 		List<Recall> recalls=repository.listRecall();
 		int i=0;
 		JSONObject jsonObjectOuter=new JSONObject();
 		for (Recall recall : recalls) {
 			JSONObject jsonObject=new JSONObject();
 			jsonObject.put("date", recall.getDbStartDate().toString());
-			jsonObject.put("dbTime", recall.getDbEndDate().getTime()-recall.getDbStartDate().getTime());
-			jsonObject.put("kTime", recall.getkEndDate().getTime()-recall.getkStartDate().getTime());
+			if(recall.getkTime()!=null && recall.getDbTime()!=null){
+				jsonObject.put("dbTime",recall.getDbTime());
+				jsonObject.put("kTime", recall.getkTime());
+			}else{
+				jsonObject.put("dbTime", recall.getDbEndDate().getTime()-recall.getDbStartDate().getTime());
+				jsonObject.put("kTime", recall.getkEndDate().getTime()-recall.getkStartDate().getTime());
+			}
 			jsonObjectOuter.put(i, jsonObject);
 			i++;
 		}

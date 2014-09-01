@@ -106,28 +106,18 @@ border-bottom: 1px solid;
 			Parameter	
 		</th>
 		<th>
-			Mining From Clusters
+			Mining From DBSCAN Clusters
 		
 		</th>
 		<th>
-		Mining From Non-Clustered Data
+		Mining From K-Medoid Data
 		</th>
 		</tr>
 		<tr>
 		<td>Time Taken</td>
 		<td>${clustredtakenTime} ms</td>
-		<td>${nonClustredtakenTime} ms</td>
-		</tr>
-		<tr>
-		<td>Number of records fetched</td>
-		<td>-</td>
-		<td>${recordCount}</td>
-		</tr>
-		<tr>		
-		<td>Clusters Accessed</td>
-		<td>${clusterCount}</td>
-		<td>--</td>
-		</tr>		
+		<td>${kMedoidClustredtakenTime} ms</td>
+		</tr>				
 		</table>
 </div>     
 <br /><br />
@@ -167,7 +157,7 @@ google.setOnLoadCallback(drawChart);
     		var headerArray=[];
     		headerArray.push("Time");
     		headerArray.push("DBScanRecall");
-    		headerArray.push("KMedoidScanRecall");
+    		headerArray.push("KMedoidRecall");
     		dataArray.push(headerArray);	
 
     	  

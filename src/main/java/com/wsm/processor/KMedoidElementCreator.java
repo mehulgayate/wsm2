@@ -3,8 +3,10 @@ package com.wsm.processor;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -73,8 +75,8 @@ public class KMedoidElementCreator {
 			String fileLine[]=new String[2];
 			fileLine[0]=reportKey;
 			
-			GraphElement graphElement=new GraphElement(new Integer(reportKey), fileLine);
-			graphElement.setId(Integer.parseInt(reportKey));
+			GraphElement graphElement=new GraphElement(count, fileLine);
+			graphElement.setId(count);
 			
 			do{
 				String key=innIterator.next();				
@@ -148,16 +150,17 @@ public class KMedoidElementCreator {
 	}
 	
 	
-	private float[][] getDistanceMatrics(Dataset dataset,int count) throws ParseException{
+	private Map<String, Float> getDistanceMatrics(Dataset dataset,int count) throws ParseException{
 		
 		System.out.println("**** creating distance matrix   ***");
-		float[][] distanceMatrix=new float[dataset.size()][dataset.size()];
+		Map<String, Float> distanceMatrix=new HashMap<String, Float>();
 		int outerCount=0;
 		int innerCount=0;
 		for (GraphElement graphElement : dataset) {
 			innerCount=0;
 			for (GraphElement innerGraphElement : dataset) {
-				distanceMatrix[outerCount][innerCount]=graphElement.calculateDistance(innerGraphElement);				
+				distanceMatrix.put(" "+outerCount+","+innerCount, graphElement.calculateDistance(innerGraphElement));
+				//distanceMatrix[outerCount][innerCount]=graphElement.calculateDistance(innerGraphElement);				
 				innerCount++;
 			}
 			outerCount++;

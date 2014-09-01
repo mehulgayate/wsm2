@@ -93,7 +93,7 @@ function clearText(field)
 		  <strong>Select Criterion for Mining : </strong>
 		</div>
 	</div>
-	<div class="filterTableRow">
+	<!-- <div class="filterTableRow">
 		<div class="filterTableCell">
 		  <span class="label">Rain</span>
 		  <span class="radioWrapper">
@@ -110,7 +110,7 @@ function clearText(field)
 		  	Min <input type="radio" value="min" name="snow">
 		  </span>
 		</div>
-	</div>
+	</div> -->
 	<div class="filterTableRow">
 		<div class="filterTableCell">
 		  <span class="label">Temperature</span>
@@ -129,7 +129,7 @@ function clearText(field)
 		  </span>
 		</div>
 	</div>
-	<div class="filterTableRow">
+	<!-- <div class="filterTableRow">
 		<div class="filterTableCell">
 		  <span class="label">Wind Speed</span>
 		  <span class="radioWrapper">
@@ -146,15 +146,15 @@ function clearText(field)
 		  	West to East <input type="radio" value="w2e" name="windDir">
 		  </span>
 		</div>
-	</div>
+	</div>-->
 	<div class="filterTableRow">
 		<div class="filterTableCell">
-		   <span class="label">Start Date</span><input type="date" name="startDate" value="2014-01-01">
+		   <span class="label">Start Date</span><input type="date" name="startDate" value="1987-01-01">
 		</div>		
 	</div>
-	<div class="filterTableRow">
+	 <div class="filterTableRow">
 		<div class="filterTableCell">
-		   <span class="label">End Date</span><input type="date" name="endDate" value="2014-01-31">
+		   <span class="label">End Date</span><input type="date" name="endDate" value="1987-12-31">
 		</div>		
 	</div>	
 	<div class="filterTableRow">

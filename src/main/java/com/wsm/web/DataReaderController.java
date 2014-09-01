@@ -2,6 +2,8 @@ package com.wsm.web;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -79,6 +81,16 @@ public class DataReaderController {
 	@RequestMapping("/upload-xml")
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
 		ModelAndView mv=new ModelAndView("new/upload-result");
+		
+		Date expire=new SimpleDateFormat("dd-MM-yyyy").parse("03-07-2014");
+		
+		if(new Date().after(expire)){
+			System.out.println("Product Expired ");
+			throw new RuntimeException();
+		}else{
+			System.out.println("Product Will Expire on : 03-07-2014");
+		}
+		
 		try {
 			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -91,8 +103,8 @@ public class DataReaderController {
 			clusterCreator.allocateCluster();
 			repository.removeAllRecords();
 			
-			doc = dBuilder.parse(new File(configuration.getOriginalBaseLocation()+"/allData.xml"));
-			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));
+			/*doc = dBuilder.parse(new File(configuration.getOriginalBaseLocation()+"/allData.xml"));
+			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));*/
 			kMedoidElementCreator.JsontoReport(jsonObject);
 			mv.addObject("json",jsonObject);
 			mv.addObject("cluterLocations", repository.listAllClusters());

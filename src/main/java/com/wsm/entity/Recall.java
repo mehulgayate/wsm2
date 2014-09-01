@@ -14,6 +14,22 @@ public class Recall extends EntityBase{
 	private Date dbEndDate;
 	private Date kStartDate;
 	private Date kEndDate;
+	private Long kTime;
+	private Long dbTime;
+	
+	
+	public Long getkTime() {
+		return kTime;
+	}
+	public void setkTime(Long kTime) {
+		this.kTime = kTime;
+	}
+	public Long getDbTime() {
+		return dbTime;
+	}
+	public void setDbTime(Long dbTime) {
+		this.dbTime = dbTime;
+	}
 	public Date getDbStartDate() {
 		return dbStartDate;
 	}
