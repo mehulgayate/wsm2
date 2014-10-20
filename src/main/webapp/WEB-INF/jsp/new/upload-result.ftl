@@ -75,7 +75,8 @@ function clearText(field)
                   </ul>
                 </li>
                 <li><a href="/mining">Mining</a></li>      
-                <li><a href="/settings">Settings</a></li>          
+                <li><a href="/settings">Settings</a></li>       
+                <li><a href="/convert">Convert Dataset</a></li>   
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->

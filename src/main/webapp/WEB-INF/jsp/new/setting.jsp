@@ -93,7 +93,8 @@ border-bottom: 1px solid;
                   </ul>
                 </li>
                 <li><a href="/mining" class="selected">Mining</a></li> 
-                <li><a href="/settings" class="selected">Settings</a></li>                
+                <li><a href="/settings" class="selected">Settings</a></li>  
+                <li><a href="/convert">Convert Dataset</a></li>              
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->

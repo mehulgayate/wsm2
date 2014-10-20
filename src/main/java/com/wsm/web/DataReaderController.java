@@ -31,6 +31,7 @@ import com.wsm.processor.KMedoidElementCreator;
 import com.wsm.processor.PMFCalculator;
 import com.wsm.processor.WSMConfiguration;
 import com.wsm.util.XMLParser;
+import com.wsm.web.support.XMLConverter;
 
 @Controller
 public class DataReaderController {
@@ -58,6 +59,9 @@ public class DataReaderController {
 
 	@Resource
 	private KMedoidElementCreator kMedoidElementCreator;	
+	
+	@Resource
+	private XMLConverter xmlConverter;
 
 	@RequestMapping("/readData")
 	public ModelAndView readData()throws Exception{
@@ -84,16 +88,7 @@ public class DataReaderController {
 
 	@RequestMapping("/upload-xml")
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
-		ModelAndView mv=new ModelAndView("new/upload-result");
-
-		Date expire=new SimpleDateFormat("dd-MM-yyyy").parse("26-10-2014");
-
-		if(new Date().after(expire)){
-			System.out.println("Product Expired ");
-			throw new RuntimeException();
-		}else{
-			
-		}
+		ModelAndView mv=new ModelAndView("new/upload-result");		
 
 		try {
 
@@ -166,4 +161,22 @@ public class DataReaderController {
 		}	
 		return mv;
 	}
+	
+	
+	@RequestMapping("/convert-xml")
+	public ModelAndView covertToXml(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
+		ModelAndView mv=new ModelAndView("new/convert-result");
+		xmlConverter.process(fileUploadForm.getXmlFile());
+		mv.addObject("folder", xmlConverter.getOuputFolder());
+		return mv;
+	}
+	
+	@RequestMapping("/convert")
+	public ModelAndView showCovertToXml()throws Exception{
+		ModelAndView mv=new ModelAndView("new/convert");
+	
+		
+		return mv;
+	}
+
 }
