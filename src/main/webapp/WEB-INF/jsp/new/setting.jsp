@@ -102,8 +102,31 @@ border-bottom: 1px solid;
     	<div class="content_wrapper content_mb_30">
     	<form action="/add-setting">
         	<div>
+        		<strong>K-Medoid Settings :</strong><br/>
         		<div style="display: inline-block;">K-Medoids number of clusters</div>
         		<div style="display: inline-block;"><input type="text" style="width: 200px" name="kMedoidClusterCount"/ value="${kMedoidClusterCount}"/></div>
+        	</div>
+        	<br/>
+        	<br/>
+        	<div>
+        		<strong>DBSCAN Settings :</strong><br/>
+        		<div style="display: inline-block;">Temperature Minimum Constraint</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="tempMinThreshold" value="${tempMinThreshold}"/></div>
+        		<br/>
+        		<div style="display: inline-block;">Temperature Maximum Constraint</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="tempMaxThreshold" value="${tempMaxThreshold}"/></div>
+        		<br/>
+        		<div style="display: inline-block;">Humidity Minimum Constraint</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="humidityMinThreshold" value="${humidityMinThreshold}"/></div>
+        		<br/>
+        		<div style="display: inline-block;">Humidity Maximum Constraint</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="humidityMaxThreshold" value="${humidityMaxThreshold}"/></div>
+        		<br/>
+        		<div style="display: inline-block;">Without boosting clustering enable</div>
+        		<div style="display: inline-block;"><select name="withoutBoostingEnable">
+        												<option value="true">true</option>
+        												<option value="false">false</option>
+        											</select></div>
         	</div> 
         	<div>        		
         		<div style="display: inline-block;"><input type="submit" value="Save"></div>

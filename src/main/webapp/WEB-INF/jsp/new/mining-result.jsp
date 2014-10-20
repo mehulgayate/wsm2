@@ -134,6 +134,9 @@ border-bottom: 1px solid;
         </div>
     	<div class="content_wrapper">
             <div id="chart_div" style="width: 900px; height: 700px;"></div>
+            <br/>
+            <br/>
+            <div id="chart_div2" style="width: 900px; height: 700px;"></div>
         </div>
         <div class="clear"></div>
     </div>
@@ -196,7 +199,57 @@ google.setOnLoadCallback(drawChart);
     				alert('Error while Ajax');
     			}		
     		});
+    	  
+    	  drawChart2()
+      }
+      
+function drawChart2() {
+    	  
+    	  var dataArray=[];
+    		var headerArray=[];
+    		headerArray.push("Time");
+    		headerArray.push("DBScanWithBoosting");
+    		headerArray.push("DBScanWithoutBoosting");
+    		dataArray.push(headerArray);	
+
+    	  
+    	  $.ajax({		
+    			type : "GET",
+    			url : "/cluster-time-data",			
+    			data : "type=TROPICAL",
+    			dataType:"json",
+    			success : function(data) {    				 
+				
+    				$.each(data,function(key,value){
+    					var innerArray=[];    	
+    					innerArray.push(value.date);    					
+    					innerArray.push(parseInt(value.withBoosting));
+    					innerArray.push(parseInt(value.withoutBoosting));
+    					dataArray.push(innerArray);
+    				});
+    				
+    			//	alert(JSON.stringify(dataArray));
+    				var data = google.visualization.arrayToDataTable(dataArray);
+
+    		        var options = {
+    		    			'width':800,'height':600,'vAxis': {'title': 'TimeTaken(ms)'},hAxis: {
+    		    		        slantedText:true,
+    		    		        slantedTextAngle:90,// here you can even use 180
+    		    		        'title': 'Date'
+    		    		    },title: "DBSCAN with boosting vs without boosting"
+    		    	};
+    		        
+    		        
+
+    		        var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+    		        chart.draw(data, options);
+    			},
+    			error : function(e) {
+    				alert('Error while Ajax');
+    			}		
+    		});
       }      
+
 </script>
 </body>
 

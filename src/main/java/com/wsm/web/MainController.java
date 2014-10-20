@@ -79,11 +79,34 @@ public class MainController {
 		if(setting!=null){
 			mv.addObject("kMedoidClusterCount", setting.getValue());
 		}
+		
+		Setting tempMinSetting=repository.findSettingByName("tempMinThreshold");
+		Setting tempMaxSetting=repository.findSettingByName("tempMaxThreshold");
+		Setting humidityMinSetting=repository.findSettingByName("humidityMinThreshold");
+		Setting humidityMaxSetting=repository.findSettingByName("humidityMaxThreshold");
+		if(tempMinSetting!=null){
+		mv.addObject("tempMinThreshold",tempMinSetting.getValue());
+		}
+		if(tempMaxSetting!=null){
+		mv.addObject("tempMaxThreshold",tempMaxSetting.getValue());
+		}
+		
+		if(humidityMinSetting!=null){
+		mv.addObject("humidityMinThreshold",humidityMinSetting.getValue());
+		}
+		if(humidityMaxSetting!=null){
+		mv.addObject("humidityMaxThreshold",humidityMaxSetting.getValue());
+		}
 		return mv;
 	}
 	
 	@RequestMapping("/add-setting")
-	public ModelAndView addSettings(@RequestParam String kMedoidClusterCount){
+	public ModelAndView addSettings(@RequestParam String kMedoidClusterCount,
+			@RequestParam String tempMinThreshold,
+			@RequestParam String tempMaxThreshold,
+			@RequestParam String humidityMinThreshold,
+			@RequestParam String humidityMaxThreshold,
+			@RequestParam String withoutBoostingEnable){
 		ModelAndView mv=new ModelAndView("redirect:/settings");
 		Setting setting=repository.findSettingByName("kMedoidClusterCount");
 		if(setting==null){
@@ -91,7 +114,50 @@ public class MainController {
 			setting.setName("kMedoidClusterCount");			
 		}
 		setting.setValue(kMedoidClusterCount);
+		
+		Setting tempMinSetting=repository.findSettingByName("tempMinThreshold");
+		Setting tempMaxSetting=repository.findSettingByName("tempMaxThreshold");
+		Setting humidityMinSetting=repository.findSettingByName("humidityMinThreshold");
+		Setting humidityMaxSetting=repository.findSettingByName("humidityMaxThreshold");
+		Setting withoutBoostingEnableSetting=repository.findSettingByName("withoutBoostingEnable");
+		
+		if(withoutBoostingEnableSetting==null){
+			withoutBoostingEnableSetting=new Setting();
+			withoutBoostingEnableSetting.setName("withoutBoostingEnable");
+		}
+		withoutBoostingEnableSetting.setValue(withoutBoostingEnable);
+		
+		if(tempMinSetting==null){
+			tempMinSetting=new Setting();
+			tempMinSetting.setName("tempMinThreshold");
+		}
+		tempMinSetting.setValue(tempMinThreshold);
+		
+		if(tempMaxSetting==null){
+			tempMaxSetting=new Setting();
+			setting.setName("tempMaxThreshold");			
+		}
+		tempMaxSetting.setValue(tempMaxThreshold);
+		
+		if(humidityMinSetting==null){
+			humidityMinSetting=new Setting();
+			humidityMinSetting.setName("humidityMinThreshold");
+		}
+		humidityMinSetting.setValue(humidityMinThreshold);
+		
+		
+		if(humidityMaxSetting==null){
+			humidityMaxSetting=new Setting();
+			humidityMaxSetting.setName("humidityMaxThreshold");
+		}
+		humidityMaxSetting.setValue(humidityMaxThreshold);
+		
+		dataStoreManager.save(humidityMaxSetting);
+		dataStoreManager.save(humidityMinSetting);
+		dataStoreManager.save(tempMaxSetting);
+		dataStoreManager.save(tempMinSetting);		
 		dataStoreManager.save(setting);
+		dataStoreManager.save(withoutBoostingEnableSetting);
 		return mv;
 	}
 }

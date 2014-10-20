@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.evalua.entity.support.DataStoreManager;
+import com.wsm.entity.ClusterEvent;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.Recall;
 import com.wsm.entity.GraphData.GraphType;
@@ -94,6 +95,25 @@ public class MiningController {
 			i++;
 		}
 		mv.addObject(jsonObjectOuter);
+		return mv;
+	}
+	
+	@RequestMapping("/cluster-time-data")
+	public ModelAndView getCluterTimeData(HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("json-string");
+		List<ClusterEvent> clusterEvents=repository.listAllClusterEvents();
+		
+		JSONObject jsonObjectOuter=new JSONObject();
+		int i=0;
+		for (ClusterEvent clusterEvent : clusterEvents) {
+			JSONObject jsonObject=new JSONObject();
+			jsonObject.put("withBoosting", clusterEvent.getTimeWithBoosting());
+			jsonObject.put("withoutBoosting", clusterEvent.getTimeWithoutBoosting());
+			jsonObjectOuter.put(i, jsonObject);
+			i++;
+		}
+		
+		mv.addObject("data",jsonObjectOuter);
 		return mv;
 	}
 

@@ -329,4 +329,10 @@ public class PMFCalculator {
 
 		}while(iterator.hasNext());
 	}
+
+	public WSMConfiguration getConfiguration() {
+		return configuration;
+	}
+	
+	
 }

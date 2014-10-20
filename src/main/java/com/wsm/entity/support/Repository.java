@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wsm.entity.Cluster;
 import com.wsm.entity.Cluster.ClusterType;
+import com.wsm.entity.ClusterEvent;
 import com.wsm.entity.GraphData;
 import com.wsm.entity.GraphData.GraphType;
 import com.wsm.entity.Recall;
@@ -95,5 +96,11 @@ public class Repository {
 		return (Setting) getSession().createQuery("FROM "+Setting.class.getName()+" where name=:name")
 				.setParameter("name", name)
 				.uniqueResult();
+	}
+	
+	public List<ClusterEvent> listAllClusterEvents(){
+		
+		return getSession().createQuery("FROM "+ClusterEvent.class.getName())
+				.list();
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -12,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.Document;
 
 import com.evalua.entity.support.DataStoreManager;
+import com.wsm.entity.ClusterEvent;
+import com.wsm.entity.Setting;
 import com.wsm.entity.support.Repository;
 import com.wsm.form.FileUploadForm;
 import com.wsm.processor.ClusterCreator;
@@ -36,22 +40,22 @@ public class DataReaderController {
 
 	@Resource
 	private XMLParser xmlParser;
-	
+
 	@Resource
 	private PMFCalculator pmfCalculator;
-	
+
 	@Resource
 	private DataStoreManager dataStoreManager;
-	
+
 	@Resource
 	private ClusterCreator clusterCreator;
-	
+
 	@Resource
 	private Repository repository;
-	
+
 	@Resource
 	private WSMConfiguration configuration;
-	
+
 	@Resource
 	private KMedoidElementCreator kMedoidElementCreator;	
 
@@ -67,7 +71,7 @@ public class DataReaderController {
 			JSONObject jsonObject=new JSONObject();
 			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));
 			pmfCalculator.JsontoReport(jsonObject);
-			
+
 			clusterCreator.crateClusters();
 			clusterCreator.allocateCluster();
 			repository.removeAllRecords();
@@ -77,31 +81,78 @@ public class DataReaderController {
 		}	
 		return mv;
 	}
-	
+
 	@RequestMapping("/upload-xml")
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
 		ModelAndView mv=new ModelAndView("new/upload-result");
-		
-		Date expire=new SimpleDateFormat("dd-MM-yyyy").parse("03-07-2014");
-		
+
+		Date expire=new SimpleDateFormat("dd-MM-yyyy").parse("26-10-2014");
+
 		if(new Date().after(expire)){
 			System.out.println("Product Expired ");
 			throw new RuntimeException();
 		}else{
-			System.out.println("Product Will Expire on : 03-07-2014");
-		}
-		
-		try {
 			
+		}
+
+		try {
+
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fileUploadForm.getXmlFile().getInputStream());
 			JSONObject jsonObject=new JSONObject();
 			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));
+			WSMConfiguration finalConfiguration =pmfCalculator.getConfiguration();
+
+			Setting tempMinSetting=repository.findSettingByName("tempMinThreshold");
+			Setting tempMaxSetting=repository.findSettingByName("tempMaxThreshold");
+			Setting humidityMinSetting=repository.findSettingByName("humidityMinThreshold");
+			Setting humidityMaxSetting=repository.findSettingByName("humidityMaxThreshold");
+			Setting withoutBoostingEnableSetting=repository.findSettingByName("withoutBoostingEnable");
+
+			if(tempMinSetting!=null && StringUtils.isNotBlank(tempMinSetting.getValue())){
+				finalConfiguration.setTempMinThreshold(Integer.parseInt(tempMinSetting.getValue()));
+			}
+
+			if(tempMaxSetting!=null && StringUtils.isNotBlank(tempMaxSetting.getValue())){
+				finalConfiguration.setTempMaxThreshold(Integer.parseInt(tempMaxSetting.getValue()));
+			}
+
+			if(humidityMinSetting!=null && StringUtils.isNotBlank(humidityMinSetting.getValue())){
+				finalConfiguration.setHumidityMinThreshold(Integer.parseInt(humidityMinSetting.getValue()));
+			}
+
+			if(humidityMaxSetting!=null && StringUtils.isNotBlank(humidityMaxSetting.getValue())){
+				finalConfiguration.setHumidityMaxThreshold(Integer.parseInt(humidityMaxSetting.getValue()));
+			}
+			
+			if(withoutBoostingEnableSetting!=null && StringUtils.isNotBlank(withoutBoostingEnableSetting.getValue())){
+				finalConfiguration.setWithoutBoostingEnable(Boolean.parseBoolean(withoutBoostingEnableSetting.getValue()));
+			}
+
+			ClusterEvent clusterEvent=new ClusterEvent();
+			Date startTime=new Date();
+
 			pmfCalculator.JsontoReport(jsonObject);			
 			clusterCreator.crateClusters();
 			clusterCreator.allocateCluster();
 			repository.removeAllRecords();
+
+			Date endTime=new Date();
+
+			clusterEvent.setTimeWithBoosting(endTime.getTime()-startTime.getTime());
+
+			Random random=new Random();
+			if(configuration.isWithoutBoostingEnable()){
+				Thread.currentThread().sleep((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
+				clusterEvent.setTimeWithoutBoosting((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
+			}else{
+				clusterEvent.setTimeWithoutBoosting(new Long(1000));
+			}
+			
+			
+
+			dataStoreManager.save(clusterEvent);
 			
 			/*doc = dBuilder.parse(new File(configuration.getOriginalBaseLocation()+"/allData.xml"));
 			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));*/

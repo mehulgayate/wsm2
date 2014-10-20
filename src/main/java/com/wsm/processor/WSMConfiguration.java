@@ -32,6 +32,16 @@ public class WSMConfiguration {
 	private String originalBaseLocation;
 	private String kMedoidClusterBaseLocation;
 	
+	private boolean withoutBoostingEnable=false;
+	
+	
+	
+	public boolean isWithoutBoostingEnable() {
+		return withoutBoostingEnable;
+	}
+	public void setWithoutBoostingEnable(boolean withoutBoostingEnable) {
+		this.withoutBoostingEnable = withoutBoostingEnable;
+	}
 	public String getkMedoidClusterBaseLocation() {
 		return kMedoidClusterBaseLocation;
 	}
