@@ -135,7 +135,7 @@ public class MainController {
 		
 		if(tempMaxSetting==null){
 			tempMaxSetting=new Setting();
-			setting.setName("tempMaxThreshold");			
+			tempMaxSetting.setName("tempMaxThreshold");			
 		}
 		tempMaxSetting.setValue(tempMaxThreshold);
 		
