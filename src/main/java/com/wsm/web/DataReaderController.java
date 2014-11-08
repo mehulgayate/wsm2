@@ -27,6 +27,7 @@ import com.wsm.entity.Setting;
 import com.wsm.entity.support.Repository;
 import com.wsm.form.FileUploadForm;
 import com.wsm.processor.ClusterCreator;
+import com.wsm.processor.DBClusterer;
 import com.wsm.processor.KMedoidElementCreator;
 import com.wsm.processor.PMFCalculator;
 import com.wsm.processor.WSMConfiguration;
@@ -58,6 +59,9 @@ public class DataReaderController {
 
 	@Resource
 	private KMedoidElementCreator kMedoidElementCreator;	
+	
+	@Resource
+	private DBClusterer dbClusterer;
 
 	@RequestMapping("/readData")
 	public ModelAndView readData()throws Exception{
@@ -133,7 +137,8 @@ public class DataReaderController {
 			ClusterEvent clusterEvent=new ClusterEvent();
 			Date startTime=new Date();
 
-			pmfCalculator.JsontoReport(jsonObject);			
+			pmfCalculator.JsontoReport(jsonObject);
+			dbClusterer.doDBSCAN();
 			clusterCreator.crateClusters();
 			clusterCreator.allocateCluster();
 			repository.removeAllRecords();

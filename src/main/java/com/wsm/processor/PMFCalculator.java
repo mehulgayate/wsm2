@@ -324,7 +324,7 @@ public class PMFCalculator {
 				}		
 
 			}while(innIterator.hasNext());
-			calculatePFM(report);
+			//calculatePFM(report);
 			dataStoreManager.save(report);			
 
 		}while(iterator.hasNext());

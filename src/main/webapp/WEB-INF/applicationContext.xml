@@ -195,4 +195,8 @@
 		
 	</bean>
 	
+	<bean id="dBClusterer" class="com.wsm.processor.DBClusterer">		
+		<property name="repository" ref="repository" />		
+	</bean>
+	
 </beans>
