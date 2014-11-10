@@ -75,17 +75,17 @@ function clearText(field)
                   </ul>
                 </li>
                 <li><a href="/mining">Mining</a></li>       
-                <li><a href="/settings">Settings</a></li>          
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/convert">Convert Dataset</a></li>          
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
         
     <div id="featured">
 		  <ul class="ui-tabs-nav">
-	        <li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-1"><a href="#fragment-1"><span>Project Definition</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-2"><a href="#fragment-2"><span>KL Diversion</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-3"><a href="#fragment-3"><span>Density Based Clustering</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-4"><a href="#fragment-4"><span>Mining</span></a></li>
+	        <li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-1"><a href="#fragment-1"><span>Project Definition</span></a></li>	        
+	        <li class="ui-tabs-nav-item" id="nav-fragment-3"><a href="#fragment-2"><span>Density Based Clustering</span></a></li>
+	        <li class="ui-tabs-nav-item" id="nav-fragment-4"><a href="#fragment-3"><span>Mining</span></a></li>
 	      </ul>
 
 	    <!-- First Content -->
@@ -93,7 +93,8 @@ function clearText(field)
 			<img src="" alt="" />
 			 <div class="info" >
 				<h2><a href="#" >Project Definition</a></h2>
-				<p>Write Something here...</p>
+				<p>Clustering Uncertain Data Based
+					on Probability Distribution Similarity</p>
 			 </div>
 	    </div>
 
@@ -101,8 +102,10 @@ function clearText(field)
 	    <div id="fragment-2" class="ui-tabs-panel ui-tabs-hide" style="">
 			<img src="" alt="" />
 			 <div class="info" >
-				<h2><a href="#" >KL Diversion</a></h2>
-				<p>Write Something here...</p>
+				<h2><a href="#" >Density Based Clustering</a></h2>
+				<p>Density-based
+					clustering methods regard clusters as dense regions of
+					objects that are separated by regions of low density.</p>
 			 </div>
 	    </div>
 
@@ -110,39 +113,16 @@ function clearText(field)
 	    <div id="fragment-3" class="ui-tabs-panel ui-tabs-hide" style="">
 			<img src="" alt="" />
 			 <div class="info" >
-				<h2><a href="#" >Density Based Clustering</a></h2>
-				<p>Write Something here...</p>
+				<h2><a href="#" >Mining</a></h2>
+				<p>Qaulity mining from clustered data.</p>
 	         </div>
 	    </div>
 
-	    <!-- Fourth Content -->
-	    <div id="fragment-4" class="ui-tabs-panel ui-tabs-hide" style="">
-			<img src="" alt="" />
-			 <div class="info" >
-				<h2><a href="#" >Mining</a></h2>
-				<p>Write Something here...</p>
-	         </div>
-	    </div>
+	   
 
 	</div>
     <div id="templatemo_main">
-    	<div class="content_wrapper content_mb_30">
-        	<div class="col_3 service_home">
-            	<img src="/static/images/Red_star.svg" alt="Image" class="startImage"/>
-                <h2>KL Diversion</h2>
-                <p>Write Here</p>
-            </div>
-            <div class="col_3 service_home">
-            	<img src="/static/images/Red_star.svg" alt="Image" class="startImage"/>
-                <h2>Advantages</h2>
-                <p>Write Here</p>
-            </div>
-            <div class="col_3 no_margin_right service_home">
-            	<img src="/static/images/Red_star.svg" alt="Image" class="startImage"/>
-                <h2>More</h2>
-                <p></p>
-            </div>
-        </div>
+    	
     	<div class="content_wrapper">
             
         </div>

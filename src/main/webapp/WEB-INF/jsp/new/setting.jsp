@@ -93,7 +93,8 @@ border-bottom: 1px solid;
                   </ul>
                 </li>
                 <li><a href="/mining" class="selected">Mining</a></li> 
-                <li><a href="/settings" class="selected">Settings</a></li>                
+                <li><a href="/settings" class="selected">Settings</a></li>  
+                <li><a href="/convert">Convert Dataset</a></li>              
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
@@ -110,11 +111,11 @@ border-bottom: 1px solid;
         	<br/>
         	<div>
         		<strong>DBSCAN Settings :</strong><br/>
-        		<div style="display: inline-block;">Temperature Minimum Constraint</div>
-        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="tempMinThreshold" value="${tempMinThreshold}"/></div>
+        		<div style="display: inline-block;">Maximum radius of the neighborhood to be considered </div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="eps" value="${tempMinThreshold}"/></div>
         		<br/>
-        		<div style="display: inline-block;">Temperature Maximum Constraint</div>
-        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="tempMaxThreshold" value="${tempMaxThreshold}"/></div>
+        		<div style="display: inline-block;">Minimum number of points needed for a cluster.</div>
+        		<div style="display: inline-block;"><input type="text" style="width: 200px" name="minPts" value="${tempMaxThreshold}"/></div>
         		<br/>
         		<div style="display: inline-block;">Humidity Minimum Constraint</div>
         		<div style="display: inline-block;"><input type="text" style="width: 200px" name="humidityMinThreshold" value="${humidityMinThreshold}"/></div>

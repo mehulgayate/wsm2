@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSM</title>
+<title>Secured Theme</title>
 <meta name="keywords" content="secured theme, free template, templatemo, red layout" />
 <meta name="description" content="Secured Theme is provided by templatemo.com" />
 <link href="/static/templatemo_style.css" rel="stylesheet" type="text/css" />
@@ -69,41 +69,27 @@ function clearText(field)
                         <li><a href="/tables">Tabular</a></li>                                     
                   </ul>
                 </li>
-                <li><a href="" class="selected">Upload</a>
+                <li><a href="">Upload</a>
                     <ul>
                         <li><a href="/upload-new">Upload New Xml</a></li>                                                                                             
                   </ul>
                 </li>
-                <li><a href="/mining">Mining</a></li>      
-                <li><a href="/settings">Settings</a></li>       
-                <li><a href="/convert">Convert Dataset</a></li>   
+                <li><a href="/mining">Mining</a></li>  
+                <li><a href="/settings">Settings</a></li>     
+                <li><a href="/convert" class="selected">Convert Dataset</a></li>          
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
         
     <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	DBSCAN Clusters:
-        	<br/>
-        	 <#list cluterLocations as cluster>
-        	 	<#if cluster.type="DBSCAN" && cluster.name?has_content>
-        	 		<div>${dbBase}/${cluster.name}</div>
-        	 	</#if>
-        	 	
-        	 </#list>
-        	 
-        	 <br/>
-        	 <br/>
-        	 K-Medoid Clusters:
-        	<br/>
-        	 <#list cluterLocations as cluster>
-        	 	<#if cluster.type="K_MEDOID" && cluster.name?has_content>
-        	 		<div>${kmedBase}/${cluster.name}</div>
-        	 	</#if>
-        	 	
-        	 </#list>
-        	
-        	
+        	<form action="/convert-xml" method="post" enctype="multipart/form-data">
+			<div style="margin: 0 auto;">
+				Upload Xml file of weather report : <input type="file" name="xmlFile">
+				<br>
+				<input type="submit" value="Upload And Process">
+			</div>
+			</form>
         </div>
     	<div class="content_wrapper">
             

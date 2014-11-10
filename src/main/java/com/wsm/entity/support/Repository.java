@@ -46,6 +46,12 @@ public class Repository {
 				.list();
 	}
 	
+	public Report findReportById(Long id){
+		return (Report) getSession().createQuery("FROM " +Report.class.getName()+" where id=:id")
+				.setParameter("id", id)
+				.uniqueResult();
+	}
+	
 	public List<Recall> listRecall(){
 		return getSession().createQuery("FROM "+Recall.class.getName())
 				.list();

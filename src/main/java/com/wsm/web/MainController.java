@@ -80,8 +80,8 @@ public class MainController {
 			mv.addObject("kMedoidClusterCount", setting.getValue());
 		}
 		
-		Setting tempMinSetting=repository.findSettingByName("tempMinThreshold");
-		Setting tempMaxSetting=repository.findSettingByName("tempMaxThreshold");
+		Setting tempMinSetting=repository.findSettingByName("eps");
+		Setting tempMaxSetting=repository.findSettingByName("minPts");
 		Setting humidityMinSetting=repository.findSettingByName("humidityMinThreshold");
 		Setting humidityMaxSetting=repository.findSettingByName("humidityMaxThreshold");
 		if(tempMinSetting!=null){
@@ -102,10 +102,8 @@ public class MainController {
 	
 	@RequestMapping("/add-setting")
 	public ModelAndView addSettings(@RequestParam String kMedoidClusterCount,
-			@RequestParam String tempMinThreshold,
-			@RequestParam String tempMaxThreshold,
-			@RequestParam String humidityMinThreshold,
-			@RequestParam String humidityMaxThreshold,
+			@RequestParam String eps,
+			@RequestParam String minPts,
 			@RequestParam String withoutBoostingEnable){
 		ModelAndView mv=new ModelAndView("redirect:/settings");
 		Setting setting=repository.findSettingByName("kMedoidClusterCount");
@@ -115,10 +113,8 @@ public class MainController {
 		}
 		setting.setValue(kMedoidClusterCount);
 		
-		Setting tempMinSetting=repository.findSettingByName("tempMinThreshold");
-		Setting tempMaxSetting=repository.findSettingByName("tempMaxThreshold");
-		Setting humidityMinSetting=repository.findSettingByName("humidityMinThreshold");
-		Setting humidityMaxSetting=repository.findSettingByName("humidityMaxThreshold");
+		Setting epss=repository.findSettingByName("eps");
+		Setting minPtss=repository.findSettingByName("minPts");
 		Setting withoutBoostingEnableSetting=repository.findSettingByName("withoutBoostingEnable");
 		
 		if(withoutBoostingEnableSetting==null){
@@ -127,35 +123,22 @@ public class MainController {
 		}
 		withoutBoostingEnableSetting.setValue(withoutBoostingEnable);
 		
-		if(tempMinSetting==null){
-			tempMinSetting=new Setting();
-			tempMinSetting.setName("tempMinThreshold");
+		if(epss==null){
+			epss=new Setting();
+			epss.setName("eps");
 		}
-		tempMinSetting.setValue(tempMinThreshold);
+		epss.setValue(eps);
 		
-		if(tempMaxSetting==null){
-			tempMaxSetting=new Setting();
-			setting.setName("tempMaxThreshold");			
+		if(minPtss==null){
+			minPtss=new Setting();
+			minPtss.setName("minPts");			
 		}
-		tempMaxSetting.setValue(tempMaxThreshold);
-		
-		if(humidityMinSetting==null){
-			humidityMinSetting=new Setting();
-			humidityMinSetting.setName("humidityMinThreshold");
-		}
-		humidityMinSetting.setValue(humidityMinThreshold);
+		minPtss.setValue(minPts);
 		
 		
-		if(humidityMaxSetting==null){
-			humidityMaxSetting=new Setting();
-			humidityMaxSetting.setName("humidityMaxThreshold");
-		}
-		humidityMaxSetting.setValue(humidityMaxThreshold);
-		
-		dataStoreManager.save(humidityMaxSetting);
-		dataStoreManager.save(humidityMinSetting);
-		dataStoreManager.save(tempMaxSetting);
-		dataStoreManager.save(tempMinSetting);		
+		dataStoreManager.save(epss);
+		dataStoreManager.save(minPtss);
+				
 		dataStoreManager.save(setting);
 		dataStoreManager.save(withoutBoostingEnableSetting);
 		return mv;

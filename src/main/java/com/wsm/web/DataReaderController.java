@@ -32,6 +32,7 @@ import com.wsm.processor.KMedoidElementCreator;
 import com.wsm.processor.PMFCalculator;
 import com.wsm.processor.WSMConfiguration;
 import com.wsm.util.XMLParser;
+import com.wsm.web.support.XMLConverter;
 
 @Controller
 public class DataReaderController {
@@ -63,6 +64,10 @@ public class DataReaderController {
 	@Resource
 	private DBClusterer dbClusterer;
 
+	@Resource
+	private XMLConverter xmlConverter;
+
+
 	@RequestMapping("/readData")
 	public ModelAndView readData()throws Exception{
 		ModelAndView mv=new ModelAndView("json-string");
@@ -88,16 +93,7 @@ public class DataReaderController {
 
 	@RequestMapping("/upload-xml")
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
-		ModelAndView mv=new ModelAndView("new/upload-result");
-
-		Date expire=new SimpleDateFormat("dd-MM-yyyy").parse("26-10-2014");
-
-		if(new Date().after(expire)){
-			System.out.println("Product Expired ");
-			throw new RuntimeException();
-		}else{
-			
-		}
+		ModelAndView mv=new ModelAndView("new/upload-result");		
 
 		try {
 
@@ -149,8 +145,8 @@ public class DataReaderController {
 
 			Random random=new Random();
 			if(configuration.isWithoutBoostingEnable()){
-				Thread.currentThread().sleep((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
-				clusterEvent.setTimeWithoutBoosting((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
+				//Thread.currentThread().sleep((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
+				//clusterEvent.setTimeWithoutBoosting((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
 			}else{
 				clusterEvent.setTimeWithoutBoosting(new Long(1000));
 			}
@@ -171,4 +167,22 @@ public class DataReaderController {
 		}	
 		return mv;
 	}
+	
+	
+	@RequestMapping("/convert-xml")
+	public ModelAndView covertToXml(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
+		ModelAndView mv=new ModelAndView("new/convert-result");
+		xmlConverter.process(fileUploadForm.getXmlFile());
+		mv.addObject("folder", xmlConverter.getOuputFolder());
+		return mv;
+	}
+	
+	@RequestMapping("/convert")
+	public ModelAndView showCovertToXml()throws Exception{
+		ModelAndView mv=new ModelAndView("new/convert");
+	
+		
+		return mv;
+	}
+
 }

@@ -61,7 +61,7 @@ public class ClusterCreator {
 
 		for (Report report : reports) {
 			Cluster cluster=repository.findClusterByName(report.getKlStringValue());
-
+			
 			if(cluster==null){
 				cluster =new Cluster();
 				cluster.setName(report.getKlStringValue());

@@ -75,35 +75,16 @@ function clearText(field)
                   </ul>
                 </li>
                 <li><a href="/mining">Mining</a></li>      
-                <li><a href="/settings">Settings</a></li>       
-                <li><a href="/convert">Convert Dataset</a></li>   
+                <li><a href="/settings">Settings</a></li>  
+                <li><a href="/convert" class="selected">Convert Dataset</a></li>         
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
         
     <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	DBSCAN Clusters:
-        	<br/>
-        	 <#list cluterLocations as cluster>
-        	 	<#if cluster.type="DBSCAN" && cluster.name?has_content>
-        	 		<div>${dbBase}/${cluster.name}</div>
-        	 	</#if>
-        	 	
-        	 </#list>
-        	 
-        	 <br/>
-        	 <br/>
-        	 K-Medoid Clusters:
-        	<br/>
-        	 <#list cluterLocations as cluster>
-        	 	<#if cluster.type="K_MEDOID" && cluster.name?has_content>
-        	 		<div>${kmedBase}/${cluster.name}</div>
-        	 	</#if>
-        	 	
-        	 </#list>
-        	
-        	
+        	Converted Files Location: 
+        	${folder}
         </div>
     	<div class="content_wrapper">
             

@@ -78,6 +78,12 @@
 		class="com.wsm.entity.support.Repository">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="XMLConverter"	class="com.wsm.web.support.XMLConverter">
+		<property name="ouputFolder">
+	        <value>${wsm.inputFilesLocation}</value>
+	    </property>
+	</bean>
+	
 	<bean id="wsmConfiguration"	class="com.wsm.processor.WSMConfiguration">
 		<property name="rainMinThreshold">
 	        <value>${wsm.config.rainMinThreshold}</value>
@@ -197,6 +203,7 @@
 	
 	<bean id="dBClusterer" class="com.wsm.processor.DBClusterer">		
 		<property name="repository" ref="repository" />		
+		<property name="dataStoreManager" ref="dataStoreManager" />
 	</bean>
 	
 </beans>
