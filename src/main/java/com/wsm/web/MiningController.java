@@ -53,7 +53,7 @@ public class MiningController {
 		mv.addObject("kMedoidClustredtakenTime",(kendDate.getTime()-kstart.getTime()));
 
 		Date dbStart=new Date();
-		String clusteredXmlString=miningService.mineInClusteredData(miningFilterForm);
+		String clusteredXmlString=miningService.mineFromNonClustredData(miningFilterForm);
 
 		Date dbEnd=new Date(new Date().getTime()+(200 + (int)(Math.random() * ((1200 - 200) + 1))));
 		mv.addObject("clustredtakenTime",(dbEnd.getTime()-dbStart.getTime()));

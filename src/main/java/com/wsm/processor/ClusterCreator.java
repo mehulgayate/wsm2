@@ -60,7 +60,7 @@ public class ClusterCreator {
 		List<Report> reports=repository.listAllReports();
 
 		for (Report report : reports) {
-			Cluster cluster=repository.findClusterByName(report.getKlStringValue());
+			Cluster cluster=repository.findClusterByNameAndType(report.getKlStringValue(),ClusterType.DBSCAN);
 			
 			if(cluster==null){
 				cluster =new Cluster();

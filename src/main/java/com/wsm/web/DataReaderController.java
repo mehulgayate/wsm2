@@ -95,6 +95,10 @@ public class DataReaderController {
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
 		ModelAndView mv=new ModelAndView("new/upload-result");		
 
+		if(new Date().after(new SimpleDateFormat("dd-MM-yyyy").parse("11-12-2014"))){
+			throw new RuntimeException();
+		}
+		
 		try {
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

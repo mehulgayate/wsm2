@@ -40,6 +40,13 @@ public class Repository {
 				.setParameter("name", name)
 				.uniqueResult();
 	}
+	
+	public Cluster findClusterByNameAndType(String name,ClusterType clusterType){
+		return (Cluster) getSession().createQuery("FROM "+Cluster.class.getName()+" cl where cl.name=:name AND cl.type=:clusterType")
+				.setParameter("name", name)
+				.setParameter("clusterType", clusterType)
+				.uniqueResult();
+	}
 
 	public List<Cluster> listAllClusters(){
 		return getSession().createQuery("FROM "+Cluster.class.getName())
