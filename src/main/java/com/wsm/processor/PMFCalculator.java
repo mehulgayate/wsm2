@@ -1,7 +1,9 @@
 package com.wsm.processor;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -58,6 +60,81 @@ public class PMFCalculator {
 	public void setConfiguration(WSMConfiguration configuration) {
 		this.configuration = configuration;
 	}
+
+	public List<Double> calcPfmNew(Report report, int temprature, int averageMin,int numberOfReports){
+
+		
+
+		double bandWidth= 1.06 * (1) * (10 ^ (-1/averageMin)) ;
+
+		double pmfval= 1 / ( 10 * (Math.sqrt( 2 * 3.13 * bandWidth ) ) ) ;
+		double pmfvalHumid= 1 / ( 10 * (Math.sqrt( 2 * 3.13 * bandWidth ) ) ) ;
+
+		for(int i=0;i<numberOfReports;i++){
+
+			double tempVar=Math.pow(temprature-averageMin, (2   /  ( -2  * bandWidth  * bandWidth )));
+			pmfval=pmfval * Math.pow(temprature, tempVar);
+		}
+
+		for(int i=0;i<numberOfReports;i++){
+
+			double tempVar=Math.pow(report.getHumidity()-averageMin, (2   /  ( -2  * bandWidth  * bandWidth )));
+			pmfvalHumid=pmfvalHumid * Math.pow(report.getHumidity(), tempVar);
+		}
+
+		
+		if(report.getRain()!=null){
+			if(report.getRain()>=configuration.getRainMaxThreshold()){
+				pmfval++;
+			}else if (report.getRain()<=configuration.getRainMinThreshold()) {
+				pmfval--;
+			}		
+		}
+		if(report.getSnow()!=null){
+			if(report.getSnow()>=configuration.getSnowMaxThreshold()){
+				pmfval++;
+			}else if(report.getSnow()<=configuration.getSnowMinThreshold()){
+				pmfval--;
+			}
+		}
+		if(report.getTemprature()!=null){
+			if(report.getTemprature()>=configuration.getTempMaxThreshold()){
+				pmfval++;
+			}else if (report.getTemprature()<=configuration.getTempMinThreshold()) {
+				pmfval--;
+			}		
+		}
+		if(report.getHumidity()!=null){
+			if(report.getHumidity()>=configuration.getHumidityMaxThreshold()){
+				pmfval++;
+			}else if (report.getHumidity()<=configuration.getHumidityMinThreshold()) {
+				pmfval--;
+			}
+		}
+		if(report.getWspeed()!=null){
+			if(report.getWspeed()>=configuration.getWindSpeedMaxThreshold()){
+				pmfval++;
+			}else if(report.getWspeed()<=configuration.getWindSpeedMinThreshold()){
+				pmfval--;
+			}
+		}
+		if(report.getWindDirection()!=null){
+			if(report.getWindDirection()==WindDirection.EAST2WEST){
+				pmfval++;
+			}else if (report.getWindDirection()==WindDirection.WEST2EAST) {
+				pmfval--;
+			}
+		}
+
+		List<Double> arraList=new ArrayList<Double>();
+		arraList.add(pmfval);
+		arraList.add(pmfvalHumid);
+		
+		return arraList;
+
+	}
+
+	
 
 	public void calcPfmForContinuous(Report report, int numberOfElements, int numberOfReports){
 
@@ -116,6 +193,33 @@ public class PMFCalculator {
 			}
 		}
 
+
+	}
+	
+	public List<Double> calcPDF(Report report, int numberOfReports,int averageMin){
+		double temprature=report.getTemprature();
+		double humid=report.getHumidity();
+		double bandWidth= 1.06 * (1) * (10 ^ (-1/averageMin)) ;
+
+		double pmfval= 1 / ( 10 * (Math.sqrt( 2 * 3.13 * bandWidth ) ) ) ;
+		double pmfvalHumid= 1 / ( 10 * (Math.sqrt( 2 * 3.13 * bandWidth ) ) ) ;
+
+		for(int i=0;i<numberOfReports;i++){
+
+			double tempVar=Math.pow(temprature-averageMin, (2   /  ( -2  * bandWidth  * bandWidth )));
+			pmfval=pmfval * Math.pow(temprature, tempVar);
+		}
+		
+		for(int i=0;i<numberOfReports;i++){
+
+			double tempVar=Math.pow(humid-averageMin, (2   /  ( -2  * bandWidth  * bandWidth )));
+			pmfvalHumid=pmfvalHumid * Math.pow(humid, tempVar);
+		}
+		
+		List<Double> res=new ArrayList<Double>();
+		res.add(pmfval);
+		res.add(pmfvalHumid);
+		return res;
 
 	}
 
