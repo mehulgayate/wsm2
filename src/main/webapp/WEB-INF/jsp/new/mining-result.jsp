@@ -111,7 +111,7 @@ border-bottom: 1px solid;
 		
 		</th>
 		<th>
-		Mining From K-Medoid Data
+		Mining From CURL Data
 		</th>
 		</tr>
 		<tr>
@@ -128,7 +128,7 @@ border-bottom: 1px solid;
 <textarea style="width: 800px; min-height: 500px;">${clusteredXmlResult}</textarea>
 
 <br /><br />
-<strong>Mining From K Medoid Clustered data  : </strong><br/>
+<strong>Mining From CURL Clustered data  : </strong><br/>
 <strong>Time Taken : </strong>${kMedoidClustredtakenTime}<br/>
 <textarea style="width: 800px; min-height: 500px;">${kMedoidClusteredData}</textarea>
 </div>   	
@@ -161,7 +161,7 @@ google.setOnLoadCallback(drawChart);
     		var headerArray=[];
     		headerArray.push("Time");
     		headerArray.push("DBScanRecall");
-    		headerArray.push("KMedoidRecall");
+    		headerArray.push("CURLRecall");
     		dataArray.push(headerArray);	
 
     	  
@@ -188,7 +188,7 @@ google.setOnLoadCallback(drawChart);
     		    		        slantedText:true,
     		    		        slantedTextAngle:90,// here you can even use 180
     		    		        'title': 'Date'
-    		    		    },title: "DBSCAN with KL vs K-Medoid with KL"
+    		    		    },title: "DBSCAN vs CURL"
     		    	};
     		        
     		        

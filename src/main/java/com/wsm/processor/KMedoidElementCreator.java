@@ -110,12 +110,12 @@ public class KMedoidElementCreator {
 
 		}while(iterator.hasNext());
 		
-		System.out.println("************ >>>>>>>>>>> K Medoid staring : ");
+		System.out.println("************ >>>>>>>>>>> CURL staring : ");
 		Setting setting=repository.findSettingByName("kMedoidClusterCount");
 		if(setting==null){
-			System.out.println("************ >>>>>>>>>>> K Medoid cluster count not set ");
+			System.out.println("************ >>>>>>>>>>> CURL cluster count not set ");
 		}
-		System.out.println("************ >>>>>>>>>>> K Medoid cluster count : "+setting.getValue());
+		System.out.println("************ >>>>>>>>>>> CURL cluster count : "+setting.getValue());
 		
 		kMedoidProcessor.setNumOfClusters(new Integer(setting.getValue()));
 		Dataset.setDistanceMatrix(getDistanceMatrics(dataset,count));		
@@ -152,7 +152,7 @@ public class KMedoidElementCreator {
 	
 	private Map<String, Float> getDistanceMatrics(Dataset dataset,int count) throws ParseException{
 		
-		System.out.println("**** creating distance matrix   ***");
+		System.out.println("**** processing u.mean and u.rep ***");
 		Map<String, Float> distanceMatrix=new HashMap<String, Float>();
 		int outerCount=0;
 		int innerCount=0;
@@ -165,7 +165,7 @@ public class KMedoidElementCreator {
 			}
 			outerCount++;
 		}
-		System.out.println("**** finished creating distance matrix   ***");
+		System.out.println("**** finished processing u.mean and u.rep   ***");
 		return distanceMatrix;
 		
 	}

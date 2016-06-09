@@ -103,13 +103,13 @@ border-bottom: 1px solid;
     	<div class="content_wrapper content_mb_30">
     	<form action="/add-setting">
         	<div>
-        		<strong>K-Medoid Settings :</strong><br/>
-        		<div style="display: inline-block;">K-Medoids number of clusters</div>
+        		<strong>CURL Settings :</strong><br/>
+        		<div style="display: inline-block;">K number of clusters</div>
         		<div style="display: inline-block;"><input type="text" style="width: 200px" name="kMedoidClusterCount"/ value="${kMedoidClusterCount}"/></div>
         	</div>
         	<br/>
         	<br/>
-        	<div>
+        	<div>        	
         		<strong>DBSCAN Settings :</strong><br/>
         		<div style="display: inline-block;">Maximum radius of the neighborhood to be considered </div>
         		<div style="display: inline-block;"><input type="text" style="width: 200px" name="eps" value="${tempMinThreshold}"/></div>
