@@ -93,11 +93,7 @@ public class DataReaderController {
 
 	@RequestMapping("/upload-xml")
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
-		ModelAndView mv=new ModelAndView("new/upload-result");		
-
-		if(new Date().after(new SimpleDateFormat("dd-MM-yyyy").parse("11-12-2014"))){
-			throw new RuntimeException();
-		}
+		ModelAndView mv=new ModelAndView("new/upload-result");
 		
 		try {
 
@@ -145,17 +141,7 @@ public class DataReaderController {
 
 			Date endTime=new Date();
 
-			clusterEvent.setTimeWithBoosting(endTime.getTime()-startTime.getTime());
-
-			Random random=new Random();
-			if(configuration.isWithoutBoostingEnable()){
-				//Thread.currentThread().sleep((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
-				//clusterEvent.setTimeWithoutBoosting((600000 + (int)(Math.random() * ((300000) + 1)))+endTime.getTime()-startTime.getTime());
-			}else{
-				clusterEvent.setTimeWithoutBoosting(new Long(1000));
-			}
-			
-			
+			clusterEvent.setTimeWithBoosting(endTime.getTime()-startTime.getTime());			
 
 			dataStoreManager.save(clusterEvent);
 			
