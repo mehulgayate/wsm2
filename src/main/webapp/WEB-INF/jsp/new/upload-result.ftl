@@ -94,7 +94,7 @@ function clearText(field)
         	 
         	 <br/>
         	 <br/>
-        	 CURL Clusters:
+        	 CURE Clusters:
         	<br/>
         	 <#list cluterLocations as cluster>
         	 	<#if cluster.type="K_MEDOID" && cluster.name?has_content>

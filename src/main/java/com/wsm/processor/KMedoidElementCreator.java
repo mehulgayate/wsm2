@@ -110,12 +110,12 @@ public class KMedoidElementCreator {
 
 		}while(iterator.hasNext());
 		
-		System.out.println("************ >>>>>>>>>>> CURL staring : ");
+		System.out.println("************ >>>>>>>>>>> CURE staring : ");
 		Setting setting=repository.findSettingByName("kMedoidClusterCount");
 		if(setting==null){
-			System.out.println("************ >>>>>>>>>>> CURL cluster count not set ");
+			System.out.println("************ >>>>>>>>>>> CURE cluster count not set ");
 		}
-		System.out.println("************ >>>>>>>>>>> CURL cluster count : "+setting.getValue());
+		System.out.println("************ >>>>>>>>>>> CURE cluster count : "+setting.getValue());
 		
 		kMedoidProcessor.setNumOfClusters(new Integer(setting.getValue()));
 		Dataset.setDistanceMatrix(getDistanceMatrics(dataset,count));		

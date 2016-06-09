@@ -103,7 +103,7 @@ border-bottom: 1px solid;
     	<div class="content_wrapper content_mb_30">
     	<form action="/add-setting">
         	<div>
-        		<strong>CURL Settings :</strong><br/>
+        		<strong>CURE Settings :</strong><br/>
         		<div style="display: inline-block;">K number of clusters</div>
         		<div style="display: inline-block;"><input type="text" style="width: 200px" name="kMedoidClusterCount"/ value="${kMedoidClusterCount}"/></div>
         	</div>
