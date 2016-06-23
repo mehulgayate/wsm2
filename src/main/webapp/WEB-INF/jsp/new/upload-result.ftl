@@ -102,6 +102,12 @@ function clearText(field)
         	 	</#if>
         	 	
         	 </#list>
+        	 <br/>
+        	 <br/>
+        	 <br/>
+        	 
+        	 <b>Time Taken by DBSCAN clustering</b> : ${dTime!} milliseconds<br/>
+        	 <b>Time Taken by CURE clustering</b> : ${kTime!} milliseconds
         	
         	
         </div>

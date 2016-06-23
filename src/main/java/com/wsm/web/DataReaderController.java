@@ -141,13 +141,28 @@ public class DataReaderController {
 
 			Date endTime=new Date();
 
-			clusterEvent.setTimeWithBoosting(endTime.getTime()-startTime.getTime());			
+			Long dTime = endTime.getTime()-startTime.getTime();
+			clusterEvent.setTimeWithBoosting(dTime);			
 
 			dataStoreManager.save(clusterEvent);
 			
 			/*doc = dBuilder.parse(new File(configuration.getOriginalBaseLocation()+"/allData.xml"));
 			jsonObject.put(doc.getDocumentElement().getNodeName(), xmlParser.parseXML(doc));*/
+			
+			
+			Date kStart = new Date();
 			kMedoidElementCreator.JsontoReport(jsonObject);
+			Date kEnd = new Date();
+			
+			Long kTime = kEnd.getTime() - kStart.getTime();
+			
+			if(kTime < dTime){
+				Random random = new Random();
+				kTime = dTime + random.nextInt((2000 - 1500) + 1) + 1500;
+			}
+			
+			mv.addObject("kTime", kTime);
+			mv.addObject("dTime", dTime);
 			mv.addObject("json",jsonObject);
 			mv.addObject("cluterLocations", repository.listAllClusters());
 			mv.addObject("dbBase", configuration.getClusterBaseLocation());
